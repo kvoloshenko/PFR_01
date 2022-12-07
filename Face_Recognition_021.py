@@ -37,7 +37,8 @@ video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
 # video_file_name = 'Los Puentes 2021 part 068'
 # video_file_name = 'Los Puentes 2021 part 072 milonga'
 # video_file_name = 'Los Puentes 2021 part 074'
-video_file_name = 'Los Puentes 2021 part 077'
+# video_file_name = 'Los Puentes 2021 part 077'
+video_file_name = 'Los Puentes 2021 part 081 vals'
 
 video_file_name_ext = '.MP4'
 video_file = video_file_path + video_file_name + video_file_name_ext

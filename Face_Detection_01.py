@@ -1,4 +1,5 @@
 #https://youtu.be/jn1HSXVmIrA
+# Face_Recognition_03_Module_01
 import cv2
 import mediapipe as mp
 import time
@@ -27,7 +28,8 @@ print(f'start_time={start_time}')
 
 mpFaceDetection = mp.solutions.face_detection
 mpDrow = mp.solutions.drawing_utils
-faceDetection = mpFaceDetection.FaceDetection()
+# TODO
+faceDetection = mpFaceDetection.FaceDetection(0.75)
 
 while True:
     ret, frame = cap.read()
@@ -42,9 +44,19 @@ while True:
     if results.detections:
         for id, detection in enumerate(results.detections):
             # print(id, detection)
-            # print(id, detection.score)
+            # TODO делать это если score > 55
+            print(id, detection.score)
             print(detection.location_data.relative_bounding_box)
-            mpDrow.draw_detection(frame, detection)
+            # mpDrow.draw_detection(frame, detection)
+            bboxC = detection.location_data.relative_bounding_box
+            ih, iw, ic = frame.shape
+            bbox = int (bboxC.xmin * iw), int (bboxC.ymin * ih), \
+                    int(bboxC.width * iw), int(bboxC.height * ih)
+            # print(type(bbox), f'bbox={bbox}')
+            cv2.rectangle(frame, bbox, (0, 0, 200), 2)
+            cv2.putText(frame, f'{int(detection.score[0] * 100)}%',
+                        (bbox[0], bbox[1] - 20), cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 2)
+
             #TODO https://youtu.be/jn1HSXVmIrA?t=983
 
     cTime = time.time()

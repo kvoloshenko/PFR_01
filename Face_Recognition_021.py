@@ -29,16 +29,17 @@ sfr.load_encoding_images("images/")
 # video_file = 'video\Los Puentes 2021-04-23 Evening\Los Puentes 2021 part 063 vals.mp4'
 # video_file = 'video\Los Puentes 2021-04-23 Evening\Los Puentes 2021 part 066 milonga.mp4'
 
-# video_file_path = 'video\\'
-# video_file_name = 'MVI_8783-Обрезка 04'
+video_file_path = 'video\\'
+video_file_name = 'MVI_8783-Обрезка 04'
 
-video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
+# video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
 # video_file_name = 'Los Puentes 2021 part 066 milonga'
 # video_file_name = 'Los Puentes 2021 part 068'
 # video_file_name = 'Los Puentes 2021 part 072 milonga'
 # video_file_name = 'Los Puentes 2021 part 074'
 # video_file_name = 'Los Puentes 2021 part 077'
-video_file_name = 'Los Puentes 2021 part 081 vals'
+# video_file_name = 'Los Puentes 2021 part 081 vals'
+# video_file_name = 'Los Puentes 2021 part 083'
 
 video_file_name_ext = '.MP4'
 video_file = video_file_path + video_file_name + video_file_name_ext
@@ -96,18 +97,18 @@ while True:
             print(type(frm_dic), f' frm_dic={frm_dic}')
             faces_found.append(frm_dic)
             faces_names.append(name)
-        # else:
-        #     cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 10)
-        #     cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 4)
+        else:
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 10)
+            cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 4)
 
 
 
-    # cv2.imshow("Frame", frame)
-    #
-    # key = cv2.waitKey(1)
-    # if key == 27:
-    #     break
-    # out.write(frame)
+    cv2.imshow("Frame", frame)
+
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
+    out.write(frame)
 
 run_time = time.time() - start_time
 print("--- %s seconds ---" % run_time) #Время окончания обработки

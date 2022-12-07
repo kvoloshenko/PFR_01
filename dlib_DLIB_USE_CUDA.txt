@@ -1,0 +1,547 @@
+dlib.DLIB_USE_CUDA
+
+https://gist.github.com/nguyenhoan1988/ed92d58054b985a1b45a521fcf8fa781
+
+
+CUDA_TOOLKIT_ROOT_DIR
+C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
+
+cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1 -DCUDAToolkit_ROOT=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3
+
+PS C:\_AI\DS_00> pip uninstall dlib
+Uninstalling dlib-19.24.0:
+  Would remove:
+    c:\users\pc\miniconda3\lib\site-packages\_dlib_pybind11.cp38-win_amd64.pyd
+    c:\users\pc\miniconda3\lib\site-packages\dlib-19.24.0.dist-info\*
+    c:\users\pc\miniconda3\lib\site-packages\dlib\*
+Proceed (Y/n)? y
+  Successfully uninstalled dlib-19.24.0
+PS C:\_AI\DS_00> git clone https://github.com/davisking/dlib.git
+remote: Counting objects: 100% (98/98), done.
+remote: Compressing objects: 100% (80/80), done.
+remote: Total 50571 (delta 34), reused 42 (delta 16), pack-reused 50473
+Receiving objects: 100% (50571/50571), 25.33 MiB | 5.85 MiB/s, done.
+Resolving deltas: 100% (35603/35603), done.
+Updating files: 100% (2203/2203), done.
+PS C:\_AI\DS_00> cd dlib
+PS C:\_AI\DS_00\dlib> mkdir build
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----        05.12.2022     14:57                build
+
+
+PS C:\_AI\DS_00\dlib> cd build
+PS C:\_AI\DS_00\dlib\build> cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1 -DCUDAToolkit_ROOT=C:\Program Files\NVIDIA GPU Computing Toolkit\CU
+DA\v11.3
+CMake Warning:
+  Ignoring extra path from command line:
+
+   "Toolkit\CUDA\v11.3"
+
+
+-- Building for: Visual Studio 17 2022
+-- Selecting Windows SDK version 10.0.22000.0 to target Windows 10.0.19044.
+-- The C compiler identification is MSVC 19.34.31935.0
+-- The CXX compiler identification is MSVC 19.34.31935.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.34.31933/bin/Hostx64/x64/cl.exe - 
+skipped
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of void*
+-- Check size of void* - done
+-- Enabling AVX instructions
+-- Found system copy of libpng: C:/Users/PC/miniconda3/Library/lib/libpng.lib;C:/Users/PC/miniconda3/Library/lib/z.lib
+-- Found system copy of libjpeg: C:/Users/PC/miniconda3/Library/lib/jpeg.lib
+-- Searching for BLAS and LAPACK
+-- Searching for BLAS and LAPACK
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE  
+-- Found CUDA: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.3 (found suitable version "11.3", minimum required is "7.5") 
+-- Looking for cuDNN install...
+-- Found cuDNN: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.3/lib/x64/cudnn.lib
+-- Building a CUDA test project to see if your compiler is compatible with CUDA...
+-- *****************************************************************************************************************
+-- *** CUDA was found but your compiler failed to compile a simple CUDA program so dlib isn't going to use CUDA. 
+-- *** The output of the failed CUDA test compile is shown below:
+-- ***
+-- ***   Change Dir: C:/_AI/DS_00/dlib/build/dlib/cuda_test_build
+   ***
+   ***   Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe ALL_BUILD.vcxpro
+j /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:m && MSBuild version 17.4.0+18d5aef85 for .NET Framework
+   ***     Checking Build System
+   ***     Building NVCC (Device) object CMakeFiles/cuda_test.dir/Debug/cuda_test_generated_cuda_test.cu.obj
+   ***     cuda_test.cu
+   ***   C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\include\crt/host_config.h(160): fatal error C1189: #error:  -- unsupported Micros
+oft Visual Studio version! Only the versions between 2017 and 2019 (inclusive) are supported! The nvcc flag '-allow-unsupported-compiler' can be us
+ed to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use a
+t your own risk. [C:\_AI\DS_00\dlib\build\dlib\cuda_test_build\cuda_test.vcxproj]
+   ***   CUSTOMBUILD : nvcc warning : The 'compute_35', 'compute_37', 'compute_50', 'sm_35', 'sm_37' and 'sm_50' architectures are deprecated, and 
+may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning). [C:\_AI\DS_00\dlib\build\dlib\cuda_test_build\cuda_test.v
+cxproj]
+   ***     CMake Error at cuda_test_generated_cuda_test.cu.obj.Debug.cmake:216 (message):
+   ***       Error generating
+   ***
+   ***
+   ***   C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(247,5): error MSB8066
+: пользовательская сборка для "C:\_AI\DS_00\dlib\dlib\cmake_utils\test_for_cuda\cuda_test.cu;C:\_AI\DS_00\dlib\dlib\cmake_utils\test_for_cuda\CMake
+Lists.txt" завершила работу с кодом 1. [C:\_AI\DS_00\dlib\build\dlib\cuda_test_build\cuda_test.vcxproj]
+   ***
+   ***
+-- *****************************************************************************************************************
+-- Disabling CUDA support for dlib.  DLIB WILL NOT USE CUDA
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CUDAToolkit_ROOT
+
+
+-- Build files have been written to: C:/_AI/DS_00/dlib/build
+PS C:\_AI\DS_00\dlib\build> cmake --build .
+MSBuild version 17.4.0+18d5aef85 for .NET Framework
+  Checking Build System
+  Building Custom Rule C:/_AI/DS_00/dlib/dlib/CMakeLists.txt
+  base64_kernel_1.cpp
+  bigint_kernel_1.cpp
+  bigint_kernel_2.cpp
+  bit_stream_kernel_1.cpp
+  entropy_decoder_kernel_1.cpp
+  entropy_decoder_kernel_2.cpp
+  entropy_encoder_kernel_1.cpp
+  entropy_encoder_kernel_2.cpp
+  md5_kernel_1.cpp
+  tokenizer_kernel_1.cpp
+  unicode.cpp
+  test_for_odr_violations.cpp
+  sockets_kernel_1.cpp
+  bsp.cpp
+  dir_nav_kernel_1.cpp
+  dir_nav_kernel_2.cpp
+  dir_nav_extensions.cpp
+  fonts.cpp
+  linker_kernel_1.cpp
+  extra_logger_headers.cpp
+  logger_kernel_1.cpp
+  logger_config_file.cpp
+  misc_api_kernel_1.cpp
+  misc_api_kernel_2.cpp
+  sockets_extensions.cpp
+  sockets_kernel_2.cpp
+  sockstreambuf.cpp
+  sockstreambuf_unbuffered.cpp
+  server_kernel.cpp
+  server_iostream.cpp
+  server_http.cpp
+  multithreaded_object_extension.cpp
+  threaded_object_extension.cpp
+  threads_kernel_1.cpp
+  threads_kernel_2.cpp
+  threads_kernel_shared.cpp
+  thread_pool_extension.cpp
+  async.cpp
+  timer.cpp
+  stack_trace.cpp
+  cpu_dlib.cpp
+  tensor_tools.cpp
+  cifar.cpp
+  global_function_search.cpp
+  kalman_filter.cpp
+  auto.cpp
+  widgets.cpp
+  drawable.cpp
+  canvas_drawing.cpp
+  style.cpp
+  base_widgets.cpp
+  gui_core_kernel_1.cpp
+  gui_core_kernel_2.cpp
+  png_loader.cpp
+  save_png.cpp
+  jpeg_loader.cpp
+  save_jpeg.cpp
+  dlib.vcxproj -> C:\_AI\DS_00\dlib\build\dlib\Debug\dlib19.24.99_debug_64bit_msvc1934.lib
+  Building Custom Rule C:/_AI/DS_00/dlib/CMakeLists.txt
+PS C:\_AI\DS_00\dlib\build> cd ..
+PS C:\_AI\DS_00\dlib> python setup.py install --set DLIB_USE_CUDA=1
+running install
+C:\Users\PC\miniconda3\lib\site-packages\setuptools\command\install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build 
+and pip and other standards-based tools.
+  warnings.warn(
+C:\Users\PC\miniconda3\lib\site-packages\setuptools\command\easy_install.py:144: EasyInstallDeprecationWarning: easy_install command is deprecated.
+ Use build and pip and other standards-based tools.
+  warnings.warn(
+running bdist_egg
+running egg_info
+creating tools\python\dlib.egg-info
+writing tools/python\dlib.egg-info\PKG-INFO
+writing dependency_links to tools/python\dlib.egg-info\dependency_links.txt
+writing top-level names to tools/python\dlib.egg-info\top_level.txt
+writing manifest file 'tools/python\dlib.egg-info\SOURCES.txt'
+package init file 'tools\python\dlib\__init__.py' not found (or not a regular file)
+reading manifest file 'tools/python\dlib.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+no previously-included directories found matching 'tools\python\build*'
+no previously-included directories found matching 'dlib\cmake_utils\*\build*'
+warning: no previously-included files matching '*.pyc' found anywhere in distribution
+adding license file 'LICENSE.txt'
+writing manifest file 'tools/python\dlib.egg-info\SOURCES.txt'
+installing library code to build\bdist.win-amd64\egg
+running install_lib
+running build_py
+running build_ext
+setup.py:129: DeprecationWarning: distutils Version classes are deprecated. Use packaging.version instead.
+  if LooseVersion(cmake_version) < '3.1.0':
+Building extension for Python 3.8.13 (default, Mar 28 2022, 06:59:08) [MSC v.1916 64 bit (AMD64)]
+Invoking CMake setup: 'cmake C:\_AI\DS_00\dlib\tools\python -DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\_AI\DS_00\dlib\build\lib.win-amd64-3.8 -DPYTHON_EXE
+CUTABLE=C:\Users\PC\miniconda3\python.exe -DDLIB_USE_CUDA=1 -DCMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE=C:\_AI\DS_00\dlib\build\lib.win-amd64-3.8 -A x
+64'
+-- Building for: Visual Studio 17 2022
+-- Selecting Windows SDK version 10.0.22000.0 to target Windows 10.0.19044.
+-- The C compiler identification is MSVC 19.34.31935.0
+-- The CXX compiler identification is MSVC 19.34.31935.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.34.31933/bin/Hostx64/x64/cl.exe - 
+skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.34.31933/bin/Hostx64/x64/cl.exe 
+- skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- pybind11 v2.10.0 
+-- Found PythonInterp: C:/Users/PC/miniconda3/python.exe (found suitable version "3.8.13", minimum required is "3.6") 
+-- Found PythonLibs: C:/Users/PC/miniconda3/libs/python38.lib
+-- Performing Test HAS_MSVC_GL_LTCG
+-- Performing Test HAS_MSVC_GL_LTCG - Success
+-- Using CMake version: 3.25.1
+-- Compiling dlib version: 19.24.99
+-- SSE4 instructions can be executed by the host processor.
+-- AVX instructions can be executed by the host processor.
+-- Looking for sys/types.h
+-- Looking for sys/types.h - found
+-- Looking for stdint.h
+-- Looking for stdint.h - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of void*
+-- Check size of void* - done
+-- Enabling AVX instructions
+-- Searching for BLAS and LAPACK
+-- Searching for BLAS and LAPACK
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - not found
+-- Found Threads: TRUE  
+-- Found CUDA: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.3 (found suitable version "11.3", minimum required is "7.5") 
+-- Looking for cuDNN install...
+-- Found cuDNN: C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v11.3/lib/x64/cudnn.lib
+-- Building a CUDA test project to see if your compiler is compatible with CUDA...
+-- *****************************************************************************************************************
+-- *** CUDA was found but your compiler failed to compile a simple CUDA program so dlib isn't going to use CUDA. 
+-- *** The output of the failed CUDA test compile is shown below:
+-- ***
+-- ***   Change Dir: C:/_AI/DS_00/dlib/build/temp.win-amd64-3.8/Release/dlib_build/cuda_test_build
+   ***
+   ***   Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe ALL_BUILD.vcxpro
+j /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:m && MSBuild version 17.4.0+18d5aef85 for .NET Framework
+   ***     Checking Build System
+   ***     Building NVCC (Device) object CMakeFiles/cuda_test.dir/Debug/cuda_test_generated_cuda_test.cu.obj
+   ***     cuda_test.cu
+   ***   C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.3\include\crt/host_config.h(160): fatal error C1189: #error:  -- unsupported Micros
+oft Visual Studio version! Only the versions between 2017 and 2019 (inclusive) are supported! The nvcc flag '-allow-unsupported-compiler' can be us
+ed to override this version check; however, using an unsupported host compiler may cause compilation failure or incorrect run time execution. Use a
+t your own risk. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\cuda_test_build\cuda_test.vcxproj]
+   ***   CUSTOMBUILD : nvcc warning : The 'compute_35', 'compute_37', 'compute_50', 'sm_35', 'sm_37' and 'sm_50' architectures are deprecated, and 
+may be removed in a future release (Use -Wno-deprecated-gpu-targets to suppress warning). [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_
+build\cuda_test_build\cuda_test.vcxproj]
+   ***     CMake Error at cuda_test_generated_cuda_test.cu.obj.Debug.cmake:216 (message):
+   ***       Error generating
+   ***       C:/_AI/DS_00/dlib/build/temp.win-amd64-3.8/Release/dlib_build/cuda_test_build/CMakeFiles/cuda_test.dir//Debug/cuda_test_generated_cuda
+_test.cu.obj
+   ***
+   ***
+   ***   C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Microsoft\VC\v170\Microsoft.CppCommon.targets(247,5): error MSB8066
+: пользовательская сборка для "C:\_AI\DS_00\dlib\dlib\cmake_utils\test_for_cuda\cuda_test.cu;C:\_AI\DS_00\dlib\dlib\cmake_utils\test_for_cuda\CMake
+Lists.txt" завершила работу с кодом 1. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\cuda_test_build\cuda_test.vcxproj]
+   ***
+   ***
+-- *****************************************************************************************************************
+-- Disabling CUDA support for dlib.  DLIB WILL NOT USE CUDA
+-- Configuring done
+-- Generating done
+-- Build files have been written to: C:/_AI/DS_00/dlib/build/temp.win-amd64-3.8/Release
+Invoking CMake build: 'cmake --build . --config Release -- /m'
+MSBuild version 17.4.0+18d5aef85 for .NET Framework
+  Checking Build System
+  Building Custom Rule C:/_AI/DS_00/dlib/dlib/CMakeLists.txt
+  base64_kernel_1.cpp
+  bigint_kernel_1.cpp
+  bigint_kernel_2.cpp
+  bit_stream_kernel_1.cpp
+  entropy_decoder_kernel_1.cpp
+  entropy_decoder_kernel_2.cpp
+  entropy_encoder_kernel_1.cpp
+  entropy_encoder_kernel_2.cpp
+  md5_kernel_1.cpp
+  tokenizer_kernel_1.cpp
+  unicode.cpp
+  test_for_odr_violations.cpp
+  sockets_kernel_1.cpp
+  bsp.cpp
+  dir_nav_kernel_1.cpp
+  dir_nav_kernel_2.cpp
+  dir_nav_extensions.cpp
+  fonts.cpp
+  linker_kernel_1.cpp
+  extra_logger_headers.cpp
+  logger_kernel_1.cpp
+  logger_config_file.cpp
+  misc_api_kernel_1.cpp
+  misc_api_kernel_2.cpp
+  sockets_extensions.cpp
+  sockets_kernel_2.cpp
+  sockstreambuf.cpp
+  sockstreambuf_unbuffered.cpp
+  server_kernel.cpp
+  server_iostream.cpp
+  server_http.cpp
+  multithreaded_object_extension.cpp
+  threaded_object_extension.cpp
+  threads_kernel_1.cpp
+  threads_kernel_2.cpp
+  threads_kernel_shared.cpp
+  thread_pool_extension.cpp
+  async.cpp
+  timer.cpp
+  stack_trace.cpp
+  cpu_dlib.cpp
+  tensor_tools.cpp
+  image_dataset_metadata.cpp
+  mnist.cpp
+  cifar.cpp
+  global_function_search.cpp
+  kalman_filter.cpp
+  auto.cpp
+  widgets.cpp
+  drawable.cpp
+  canvas_drawing.cpp
+  style.cpp
+  base_widgets.cpp
+  gui_core_kernel_1.cpp
+  gui_core_kernel_2.cpp
+  png_loader.cpp
+  save_png.cpp
+  jpeg_loader.cpp
+  save_jpeg.cpp
+  arm_init.c
+  filter_neon_intrinsics.c
+  palette_neon_intrinsics.c
+  png.c
+  pngerror.c
+  pngget.c
+  pngmem.c
+  pngpread.c
+  pngread.c
+  pngrio.c
+  pngrtran.c
+  pngrutil.c
+  pngset.c
+  pngtrans.c
+  pngwio.c
+  pngwrite.c
+  pngwtran.c
+  pngwutil.c
+  adler32.c
+  compress.c
+  crc32.c
+  deflate.c
+  gzclose.c
+  gzlib.c
+  gzread.c
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzread.c(319,17): warning C4267: =: преобразование из "size_t" в "unsigned int"; возможна потеря данных [C:\_
+AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+  gzwrite.c
+  infback.c
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzread.c(400,11): warning C4267: =: преобразование из "size_t" в "unsigned int"; возможна потеря данных [C:\_ 
+AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzread.c(472,11): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных [C:\_AI\DS_00\ 
+dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+  inffast.c
+  inflate.c
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzwrite.c(212,24): warning C4267: =: преобразование из "size_t" в "unsigned int"; возможна потеря данных [C:\ 
+_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzwrite.c(232,21): warning C4267: =: преобразование из "size_t" в "unsigned int"; возможна потеря данных [C:\ 
+_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+C:\_AI\DS_00\dlib\dlib\external\zlib\gzwrite.c(371,11): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных [C:\_AI\DS_00 
+\dlib\build\temp.win-amd64-3.8\Release\dlib_build\dlib.vcxproj]
+  inftrees.c
+  trees.c
+  uncompr.c
+  zutil.c
+  jaricom.c
+  jcapimin.c
+  jcapistd.c
+  jcarith.c
+  jccoefct.c
+  jccolor.c
+  jcdctmgr.c
+  jchuff.c
+  jcinit.c
+  jcmainct.c
+  jcmarker.c
+  jcmaster.c
+  jcomapi.c
+  jcparam.c
+  jcprepct.c
+  jcsample.c
+  jdapimin.c
+  jdapistd.c
+  jdarith.c
+  jdatadst.c
+  jdatasrc.c
+  jdcoefct.c
+  jdcolor.c
+  jddctmgr.c
+  jdhuff.c
+  jdinput.c
+  jdmainct.c
+  jdmarker.c
+  jdmaster.c
+  jdmerge.c
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jdmarker.c(331,5): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strnc
+py_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Releas 
+e\dlib_build\dlib.vcxproj]
+  jdpostct.c
+  jdsample.c
+  jerror.c
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jdmarker.c(654,5): warning C4996: 'strncpy': This function or variable may be unsafe. Consider using strnc 
+py_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Releas 
+e\dlib_build\dlib.vcxproj]
+  jfdctflt.c
+  jfdctfst.c
+  jfdctint.c
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jerror.c(194,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf
+_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\ 
+dlib_build\dlib.vcxproj]
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jerror.c(196,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf 
+_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\ 
+dlib_build\dlib.vcxproj]
+  jidctflt.c
+  jidctfst.c
+  jidctint.c
+  jmemmgr.c
+  jmemnobs.c
+  jquant1.c
+  jquant2.c
+  jutils.c
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jmemmgr.c(1103,19): warning C4996: 'getenv': This function or variable may be unsafe. Consider using _dupe
+nv_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Releas
+e\dlib_build\dlib.vcxproj]
+C:\_AI\DS_00\dlib\dlib\external\libjpeg\jmemmgr.c(1106,11): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscan
+f_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details. [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release 
+\dlib_build\dlib.vcxproj]
+  dlib.vcxproj -> C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\dlib_build\Release\dlib19.24.99_release_64bit_msvc1934.lib
+  Building Custom Rule C:/_AI/DS_00/dlib/tools/python/CMakeLists.txt
+  dlib.cpp
+  matrix.cpp
+  vector.cpp
+  svm_c_trainer.cpp
+  svm_rank_trainer.cpp
+  decision_functions.cpp
+  other.cpp
+  basic.cpp
+  cca.cpp
+  sequence_segmenter.cpp
+  svm_struct.cpp
+  image.cpp
+  image2.cpp
+  image3.cpp
+  image4.cpp
+  rectangles.cpp
+  object_detection.cpp
+  shape_predictor.cpp
+  correlation_tracker.cpp
+  face_recognition.cpp
+  cnn_face_detector.cpp
+  global_optimization.cpp
+  image_dataset_metadata.cpp
+  numpy_returns.cpp
+  line.cpp
+C:\_AI\DS_00\dlib\dlib\..\dlib/image_transforms/assign_image.h(86,45): warning C4018: >=: несоответствие типов со знаком и без знака (компилируетс
+я исходный файл C:\_AI\DS_00\dlib\tools\python\src\image3.cpp) [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\_dlib_pybind11.vcxproj]
+C:\_AI\DS_00\dlib\dlib\..\dlib/image_transforms/assign_image.h(160,1): message : выполняется компиляция ссылки на экземпляр шаблон функции "void d 
+lib::impl_assign_image_scaled<out_image_type,src_image_type>(dlib::image_view<out_image_type> &,const src_image_type &,const double)" [C:\_AI\DS_0 
+0\dlib\build\temp.win-amd64-3.8\Release\_dlib_pybind11.vcxproj]
+          with
+          [
+              out_image_type=dlib::numpy_image<int8_t>,
+              src_image_type=dlib::matrix_op<dlib::op_image_to_mat<dlib::numpy_image<uint32_t>,uint32_t>>
+          ] (компилируется исходный файл C:\_AI\DS_00\dlib\tools\python\src\image3.cpp)
+C:\_AI\DS_00\dlib\dlib\..\dlib/image_transforms/assign_image.h(177,1): message : выполняется компиляция ссылки на экземпляр шаблон функции "void d 
+lib::impl_assign_image_scaled<dest_image_type,dlib::matrix_op<dlib::op_image_to_mat<src_image_type,T>>>(dest_image_type &,const dlib::matrix_op<dl 
+ib::op_image_to_mat<src_image_type,T>> &,const double)" [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\_dlib_pybind11.vcxproj]
+          with
+          [
+              dest_image_type=dlib::numpy_image<int8_t>,
+              src_image_type=dlib::numpy_image<uint32_t>,
+          with
+          [
+              dest_image_type=dlib::numpy_image<int8_t>,
+              src_image_type=dlib::numpy_image<uint32_t>
+          ]
+C:\_AI\DS_00\dlib\tools\python\src\image3.cpp(435,120): message : выполняется компиляция ссылки на экземпляр шаблон функции "pybind11::array conve 
+rt_image_scaled<uint32_t>(const dlib::numpy_image<uint32_t> &,const std::string &,const double)" [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Relea 
+se\_dlib_pybind11.vcxproj]
+C:\_AI\DS_00\dlib\dlib\..\dlib/image_transforms/assign_image.h(87,45): warning C4018: <=: несоответствие типов со знаком и без знака (компилируетс 
+я исходный файл C:\_AI\DS_00\dlib\tools\python\src\image3.cpp) [C:\_AI\DS_00\dlib\build\temp.win-amd64-3.8\Release\_dlib_pybind11.vcxproj]
+  gui.cpp
+     Создается библиотека C:/_AI/DS_00/dlib/build/temp.win-amd64-3.8/Release/Release/_dlib_pybind11.lib и объект C:/_AI/DS_00/dlib/build/temp.win- 
+  amd64-3.8/Release/Release/_dlib_pybind11.exp
+  Создание кода
+  Создание кода завершено
+  _dlib_pybind11.vcxproj -> C:\_AI\DS_00\dlib\build\lib.win-amd64-3.8\_dlib_pybind11.cp38-win_amd64.pyd
+  Building Custom Rule C:/_AI/DS_00/dlib/tools/python/CMakeLists.txt
+creating build\bdist.win-amd64
+creating build\bdist.win-amd64\egg
+creating build\bdist.win-amd64\egg\dlib
+copying build\lib.win-amd64-3.8\dlib\__init__.py -> build\bdist.win-amd64\egg\dlib
+copying build\lib.win-amd64-3.8\_dlib_pybind11.cp38-win_amd64.pyd -> build\bdist.win-amd64\egg
+byte-compiling build\bdist.win-amd64\egg\dlib\__init__.py to __init__.cpython-38.pyc
+creating stub loader for _dlib_pybind11.cp38-win_amd64.pyd
+byte-compiling build\bdist.win-amd64\egg\_dlib_pybind11.py to _dlib_pybind11.cpython-38.pyc
+creating build\bdist.win-amd64\egg\EGG-INFO
+copying tools\python\dlib.egg-info\PKG-INFO -> build\bdist.win-amd64\egg\EGG-INFO
+copying tools\python\dlib.egg-info\SOURCES.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying tools\python\dlib.egg-info\dependency_links.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying tools\python\dlib.egg-info\not-zip-safe -> build\bdist.win-amd64\egg\EGG-INFO
+copying tools\python\dlib.egg-info\top_level.txt -> build\bdist.win-amd64\egg\EGG-INFO
+writing build\bdist.win-amd64\egg\EGG-INFO\native_libs.txt
+creating dist
+creating 'dist\dlib-19.24.99-py3.8-win-amd64.egg' and adding 'build\bdist.win-amd64\egg' to it
+removing 'build\bdist.win-amd64\egg' (and everything under it)
+Processing dlib-19.24.99-py3.8-win-amd64.egg
+creating c:\users\pc\miniconda3\lib\site-packages\dlib-19.24.99-py3.8-win-amd64.egg
+Extracting dlib-19.24.99-py3.8-win-amd64.egg to c:\users\pc\miniconda3\lib\site-packages
+Adding dlib 19.24.99 to easy-install.pth file
+
+Installed c:\users\pc\miniconda3\lib\site-packages\dlib-19.24.99-py3.8-win-amd64.egg
+Processing dependencies for dlib==19.24.99
+Finished processing dependencies for dlib==19.24.99

@@ -33,8 +33,9 @@ sfr.load_encoding_images("images/")
 # video_file_name = 'MVI_8783-Обрезка 04'
 
 video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
-video_file_name = 'Los Puentes 2021 part 066 milonga'
-
+# video_file_name = 'Los Puentes 2021 part 066 milonga'
+# video_file_name = 'Los Puentes 2021 part 068'
+video_file_name = 'Los Puentes 2021 part 072 milonga'
 
 video_file_name_ext = '.MP4'
 video_file = video_file_path + video_file_name + video_file_name_ext

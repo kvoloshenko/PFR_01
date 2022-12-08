@@ -9,9 +9,6 @@ import time
 from datetime import datetime
 import json
 
-# imgKV = face_recognition.load_image_file('images\\Konstantin Voloshenko.jpg')
-# imgKVRGB = cv2.cvtColor(imgKV, cv2.COLOR_BGR2RGB)
-
 path = 'images'
 images = []
 classNames = []
@@ -54,8 +51,12 @@ encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
 print('Encoding Complete')
 
-video_file_path = 'video\\'
-video_file_name = 'MVI_8783-Обрезка 04'
+# video_file_path = 'video\\'
+# video_file_name = 'MVI_8783-Обрезка 04'
+video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
+# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_360'
+video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
+
 video_file_name_ext = '.MP4'
 video_file = video_file_path + video_file_name + video_file_name_ext
 print(f'video_file={video_file}')
@@ -79,39 +80,41 @@ while True:
     count += 1
     if not success:
         break
-    imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)
-    # imgS = cv2.resize(img, (0, 0), None, 0.5, 0.5)
+    # imgS = cv2.resize(img, (0, 0), None, 0.25, 0.25)
+    imgS = cv2.resize(img, (0, 0), None, 0.5, 0.5)
     imgSRGB = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
 
     facesCurFrame = face_recognition.face_locations(imgSRGB)
     encodesCurFrame = face_recognition.face_encodings(imgSRGB, facesCurFrame)
     frm_dic = {}
     for encodeFace, faceLoc in zip(encodesCurFrame, facesCurFrame):
-        matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
+        # matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
+        matches = face_recognition.compare_faces(encodeListKnown, encodeFace, 0.5)
         faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
         # print(faceDis)
         matchIndex = np.argmin(faceDis)
         if matches[matchIndex]:
             name = classNames[matchIndex]
-        print(name)
+            print(name)
 
-        y1, x2, y2, x1 = faceLoc
-        y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-        cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-        # markAttendance(name)
-        frm_dic['name'] = name
-        frm_dic['frame_num'] = int(count)
-        frm_dic['x1'] = int(x1)
-        frm_dic['y1'] = int(y1)
-        frm_dic['x2'] = int(x2)
-        frm_dic['y2'] = int(y2)
-        time_sec = round(int(count) / fps)
-        frm_dic['time_sec'] = time_sec
-        print(type(frm_dic), f' frm_dic={frm_dic}')
-        faces_found.append(frm_dic)
-        faces_names.append(name)
+            y1, x2, y2, x1 = faceLoc
+            # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+            y1, x2, y2, x1 = y1 * 2, x2 * 2, y2 * 2, x1 * 2
+            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+            cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+            # markAttendance(name)
+            frm_dic['name'] = name
+            frm_dic['frame_num'] = int(count)
+            frm_dic['x1'] = int(x1)
+            frm_dic['y1'] = int(y1)
+            frm_dic['x2'] = int(x2)
+            frm_dic['y2'] = int(y2)
+            time_sec = round(int(count) / fps)
+            frm_dic['time_sec'] = time_sec
+            # print(type(frm_dic), f' frm_dic={frm_dic}')
+            faces_found.append(frm_dic)
+            faces_names.append(name)
 
     # cv2.imshow('img RGB', imgS)
     cv2.imshow('img RGB', img)

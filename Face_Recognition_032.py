@@ -71,6 +71,7 @@ video_out_file = video_file_path + video_file_name + '_out' + video_file_name_ex
 # Initialize count
 count = 0
 faces_found = []
+faces_found_first = []
 faces_names = []
 start_time = time.time() #Время начала обработки
 print(f'start_time={start_time}')
@@ -114,7 +115,9 @@ while True:
             frm_dic['time_sec'] = time_sec
             # print(type(frm_dic), f' frm_dic={frm_dic}')
             faces_found.append(frm_dic)
-            faces_names.append(name)
+            if name not in faces_names:
+                faces_names.append(name)
+                faces_found_first.append(frm_dic)
 
     # cv2.imshow('img RGB', img)
     # out.write(img)
@@ -130,16 +133,16 @@ print(type(faces_found), f'faces_found={faces_found}')
 json_file = video_file_path + video_file_name + '.json'
 data_save_json(faces_found, json_file)
 
-faces_one = set(faces_names)
-print(type(faces_one), f'faces_one={faces_one}')
-faces_found_first = []
-for name in faces_one:
-    for item in faces_found:
-        if item['name'] == name:
-            # time_sec = round(item['frame_num'] / fps)
-            # item['time_sec'] = time_sec
-            faces_found_first.append(item)
-            break
+# faces_one = set(faces_names)
+# print(type(faces_one), f'faces_one={faces_one}')
+# faces_found_first = []
+# for name in faces_one:
+#     for item in faces_found:
+#         if item['name'] == name:
+#             # time_sec = round(item['frame_num'] / fps)
+#             # item['time_sec'] = time_sec
+#             faces_found_first.append(item)
+#             break
 
 print(type(faces_found_first), f'faces_found_first={faces_found_first}')
 # json_string = json.dumps(faces_found_first)

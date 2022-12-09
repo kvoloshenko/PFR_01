@@ -29,23 +29,10 @@ def findEncodings(images):
         encodeList.append(encode)
     return encodeList
 
-def markAttendance(name):
-    with open('Attendance.csv','r+') as f:
-        myDataList = f.readlines()
-        nameList = []
-        for line in myDataList:
-            entry = line.split(',')
-            nameList.append(entry[0])
-        if name not in nameList:
-            now = datetime.now()
-            dtString = now.strftime('%H:%M:%S')
-            f.writelines(f'n{name},{dtString}')
-
 def data_save_json(data, file):
     # path = os.path.join('', 'json_output', file)
     with open(file, 'w', encoding='utf8') as f:
         json.dump(data, f)
-
 
 encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
@@ -104,7 +91,6 @@ while True:
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
             cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-            # markAttendance(name)
             frm_dic['name'] = name
             frm_dic['frame_num'] = int(count)
             frm_dic['x1'] = int(x1)
@@ -133,16 +119,6 @@ print(type(faces_found), f'faces_found={faces_found}')
 json_file = video_file_path + video_file_name + '.json'
 data_save_json(faces_found, json_file)
 
-# faces_one = set(faces_names)
-# print(type(faces_one), f'faces_one={faces_one}')
-# faces_found_first = []
-# for name in faces_one:
-#     for item in faces_found:
-#         if item['name'] == name:
-#             # time_sec = round(item['frame_num'] / fps)
-#             # item['time_sec'] = time_sec
-#             faces_found_first.append(item)
-#             break
 
 print(type(faces_found_first), f'faces_found_first={faces_found_first}')
 # json_string = json.dumps(faces_found_first)

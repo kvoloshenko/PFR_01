@@ -1,6 +1,7 @@
 # FACE RECOGNITION + ATTENDANCE PROJECT
 # https://youtu.be/sz25xxF_AVE?t=1228
 # Останавливаем обработку после первого найденного
+# TODO https://stackoverflow.com/questions/60450364/how-to-run-dlib-face-recognition-with-gpu
 
 import cv2
 import numpy as np
@@ -30,7 +31,6 @@ def findFacesOnVideo(video_file):
     frame_height = int(cap.get(4))
     fps = cap.get(cv2.CAP_PROP_FPS)
     print(f' frame_width={frame_width} frame_height={frame_height} fps={fps}')
-    video_out_file = video_file_path + video_file_name + '_out' + video_file_name_ext
     # out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
 
     # Initialize count
@@ -95,21 +95,22 @@ def findFacesOnVideo(video_file):
             break
 
     run_time = time.time() - start_time
-    print("--- %s seconds ---" % run_time)  # Время окончания обработки
+
 
     if len(faces_found_first) > 0:
         print(type(faces_found), f'faces_found={faces_found}')
         # json_string = json.dumps(faces_found)
-        json_file = video_file_path + video_file_name + '.json'
+        json_file = video_file + '.json'
         data_save_json(faces_found, json_file)
 
         print(type(faces_found_first), f'faces_found_first={faces_found_first}')
         # json_string = json.dumps(faces_found_first)
-        json_file = video_file_path + video_file_name + '_first' + '.json'
+        json_file = video_file + '_first' + '.json'
         data_save_json(faces_found_first, json_file)
     else:
         print('Faces not found on the video')
 
+    print("--- %s seconds ---" % run_time)  # Время окончания обработки
     cap.release()
     # out.release()
     cv2.destroyAllWindows()
@@ -133,16 +134,11 @@ encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
 print('Encoding Complete')
 
-# video_file_path = 'video\\'
-# video_file_name = 'MVI_8783-Обрезка 04'
 video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
-# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_360'
-# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
-video_file_name = 'Los Puentes 2021 part 066 milonga'
-
-video_file_name_ext = '.MP4'
-video_file = video_file_path + video_file_name + video_file_name_ext
-print(f'video_file={video_file}')
-
-findFacesOnVideo(video_file)
+myVideoList = os.listdir(video_file_path)
+print(myVideoList)
+for video_file in myVideoList:
+    v = video_file_path + video_file
+    print(v)
+    findFacesOnVideo(v)
 

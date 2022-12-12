@@ -1,6 +1,6 @@
 # FACE RECOGNITION + ATTENDANCE PROJECT
 # https://youtu.be/sz25xxF_AVE?t=1228
-# Остнавливаем обработку после первого найденного
+# Останавливаем обработку после первого найденного
 
 import cv2
 import numpy as np
@@ -44,7 +44,8 @@ print('Encoding Complete')
 # video_file_name = 'MVI_8783-Обрезка 04'
 video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
 # video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_360'
-video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
+# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
+video_file_name = 'Los Puentes 2021 part 066 milonga'
 
 video_file_name_ext = '.MP4'
 video_file = video_file_path + video_file_name + video_file_name_ext
@@ -63,7 +64,7 @@ faces_found = []
 faces_found_first = []
 faces_names = []
 start_time = time.time() #Время начала обработки
-print(f'start_time={start_time}')
+# print(f'start_time={start_time}')
 
 while True:
     success, img  = cap.read()
@@ -106,14 +107,17 @@ while True:
             if name not in faces_names:
                 faces_names.append(name)
                 faces_found_first.append(frm_dic)
-                # Прерываем, когда нашли первый раз
-                break
+                print(f'len(faces_found_first)={len(faces_found_first)}')
 
     # cv2.imshow('img RGB', img)
     # out.write(img)
     # key = cv2.waitKey(1)
     # if key == 27:
     #     break
+
+    # Прерываем цикл, когда нашли первый раз
+    if len(faces_found_first) > 0:
+        break
 
 run_time = time.time() - start_time
 print("--- %s seconds ---" % run_time) #Время окончания обработки

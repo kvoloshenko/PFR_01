@@ -133,16 +133,23 @@ encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
 print('Encoding Complete')
 
-# video_file_path = 'video\\'
-# video_file_name = 'MVI_8783-Обрезка 04'
+# # video_file_path = 'video\\'
+# # video_file_name = 'MVI_8783-Обрезка 04'
+# video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
+# # video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_360'
+# # video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
+# video_file_name = 'Los Puentes 2021 part 066 milonga'
+#
+# video_file_name_ext = '.MP4'
+# video_file = video_file_path + video_file_name + video_file_name_ext
+# print(f'video_file={video_file}')
+
+
 video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
-# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_360'
-# video_file_name = 'Los Puentes 2021 part 066 milonga_fps_25_res_720'
-video_file_name = 'Los Puentes 2021 part 066 milonga'
-
-video_file_name_ext = '.MP4'
-video_file = video_file_path + video_file_name + video_file_name_ext
-print(f'video_file={video_file}')
-
-findFacesOnVideo(video_file)
+myVideoList = os.listdir(video_file_path)
+print(myVideoList)
+for video_file in myVideoList:
+    v = video_file_path + video_file
+    print(v)
+    findFacesOnVideo(v)
 

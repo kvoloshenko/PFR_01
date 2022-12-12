@@ -30,7 +30,6 @@ def findFacesOnVideo(video_file):
     frame_height = int(cap.get(4))
     fps = cap.get(cv2.CAP_PROP_FPS)
     print(f' frame_width={frame_width} frame_height={frame_height} fps={fps}')
-    video_out_file = video_file_path + video_file_name + '_out' + video_file_name_ext
     # out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
 
     # Initialize count
@@ -100,12 +99,12 @@ def findFacesOnVideo(video_file):
     if len(faces_found_first) > 0:
         print(type(faces_found), f'faces_found={faces_found}')
         # json_string = json.dumps(faces_found)
-        json_file = video_file_path + video_file_name + '.json'
+        json_file = video_file + '.json'
         data_save_json(faces_found, json_file)
 
         print(type(faces_found_first), f'faces_found_first={faces_found_first}')
         # json_string = json.dumps(faces_found_first)
-        json_file = video_file_path + video_file_name + '_first' + '.json'
+        json_file = video_file + '_first' + '.json'
         data_save_json(faces_found_first, json_file)
     else:
         print('Faces not found on the video')

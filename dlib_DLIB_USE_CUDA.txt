@@ -33,8 +33,7 @@ d-----        05.12.2022     14:57                build
 
 
 PS C:\_AI\DS_00\dlib> cd build
-PS C:\_AI\DS_00\dlib\build> cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1 -DCUDAToolkit_ROOT=C:\Program Files\NVIDIA GPU Computing Toolkit\CU
-DA\v11.3
+PS C:\_AI\DS_00\dlib\build>
 CMake Warning:
   Ignoring extra path from command line:
 

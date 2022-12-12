@@ -1,6 +1,7 @@
 # FACE RECOGNITION + ATTENDANCE PROJECT
 # https://youtu.be/sz25xxF_AVE?t=1228
 # Останавливаем обработку после первого найденного
+# TODO https://stackoverflow.com/questions/60450364/how-to-run-dlib-face-recognition-with-gpu
 
 import cv2
 import numpy as np

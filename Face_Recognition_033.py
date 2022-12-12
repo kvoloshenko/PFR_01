@@ -95,7 +95,7 @@ def findFacesOnVideo(video_file):
             break
 
     run_time = time.time() - start_time
-    print("--- %s seconds ---" % run_time)  # Время окончания обработки
+
 
     if len(faces_found_first) > 0:
         print(type(faces_found), f'faces_found={faces_found}')
@@ -110,6 +110,7 @@ def findFacesOnVideo(video_file):
     else:
         print('Faces not found on the video')
 
+    print("--- %s seconds ---" % run_time)  # Время окончания обработки
     cap.release()
     # out.release()
     cv2.destroyAllWindows()

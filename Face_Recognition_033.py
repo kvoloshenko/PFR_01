@@ -134,7 +134,8 @@ encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
 print('Encoding Complete')
 
-video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
+# video_file_path = 'video\\Los Puentes 2021-04-23 Evening\\'
+video_file_path = 'video\\Los Puentes 2021-04-24 Evening\\'
 myVideoList = os.listdir(video_file_path)
 print(myVideoList)
 for video_file in myVideoList:

@@ -25,6 +25,7 @@ app = FaceAnalysis(name="buffalo_l",providers=['CUDAExecutionProvider'])
 app.prepare(ctx_id=0, det_size=(256, 256))
 
 def extract_face(filename, required_size=(256, 256)):
+    print(f'extract_face, filename={filename}')
     image = Image.open(filename)
     img_arr = np.array(image)
     im = Image.fromarray((img_arr))
@@ -33,6 +34,7 @@ def extract_face(filename, required_size=(256, 256)):
     emb_res = app.get(rgb_arr)
     try:
       face_array = emb_res[0].embedding
+      # print(f'extract_face, face_array={face_array}')
       return face_array
     except:
       print('no embedding found for this image')
@@ -99,6 +101,7 @@ for filename in os.listdir('dataset/test_faces/'):
       print('no embedding found for this image')
 
     predict = clf_model.predict(face_array)
+    print(type(predict), f'filename={filename} predict={predict}')
 
     # TODO NameError: name 'img_emb' is not defined
     # max_proba = clf_model.predict_proba(img_emb).max()

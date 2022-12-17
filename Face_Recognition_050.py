@@ -86,4 +86,5 @@ cap.release()
 # Close the image show frame
 cv2.destroyAllWindows()
 plt.imshow(frame[120:120 + 250, 200:200 + 250, :])
+plt.show()
 # https://youtu.be/LKispFFQ5GU?t=3973

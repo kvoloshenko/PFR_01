@@ -134,3 +134,5 @@ dmypy.json
 /AI_Fases/
 /dataset/
 /images_kv/
+/FR_05_data/
+/catboost_info/

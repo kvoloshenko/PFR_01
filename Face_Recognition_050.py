@@ -61,18 +61,18 @@ while cap.isOpened():
     frame = frame[120:120 + 250, 200:200 + 250, :]
 
     # Collect anchors
-    if cv2.waitKey(1) & 0XFF == ord('a'):
-        # Create the unique file path
-        imgname = os.path.join(ANC_PATH, '{}.jpg'.format(uuid.uuid1()))
-        # Write out anchor image
-        cv2.imwrite(imgname, frame)
-
-    # Collect positives
-    if cv2.waitKey(1) & 0XFF == ord('p'):
-        # Create the unique file path
-        imgname = os.path.join(POS_PATH, '{}.jpg'.format(uuid.uuid1()))
-        # Write out positive image
-        cv2.imwrite(imgname, frame)
+    # if cv2.waitKey(1) & 0XFF == ord('a'):
+    #     # Create the unique file path
+    #     imgname = os.path.join(ANC_PATH, '{}.jpg'.format(uuid.uuid1()))
+    #     # Write out anchor image
+    #     cv2.imwrite(imgname, frame)
+    #
+    # # Collect positives
+    # if cv2.waitKey(1) & 0XFF == ord('p'):
+    #     # Create the unique file path
+    #     imgname = os.path.join(POS_PATH, '{}.jpg'.format(uuid.uuid1()))
+    #     # Write out positive image
+    #     cv2.imwrite(imgname, frame)
 
     # Show image back to screen
     cv2.imshow('Image Collection', frame)

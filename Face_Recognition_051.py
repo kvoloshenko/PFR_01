@@ -299,9 +299,19 @@ from tensorflow.keras.metrics import Precision, Recall
 
 # Get a batch of test data
 test_input, test_val, y_true = test_data.as_numpy_iterator().next()
+# Make predictions
 y_hat = siamese_model.predict([test_input, test_val])
 # Post processing the results
-# [1 if prediction > 0.5 else 0 for prediction in y_hat ]
+rez_1 = [1 if prediction > 0.5 else 0 for prediction in y_hat ]
+# rez = []
+# for prediction in y_hat:
+#     if prediction > 0.5:
+#         rez.append(1)
+#     else:
+#         rez.append(0)
+# print(f'rez={rez}')
+print(f'rez_1={rez_1}')
+#
 #
 print(type(y_true), f'y_true={y_true}')
 
@@ -335,6 +345,7 @@ for test_input, test_val, y_true in test_data.as_numpy_iterator():
 print(r.result().numpy(), p.result().numpy())
 
 # 6.4 Viz Results
+# https://youtu.be/LKispFFQ5GU?t=12411
 
 # Set plot size
 plt.figure(figsize=(10,8))
@@ -351,6 +362,7 @@ plt.imshow(test_val[0])
 plt.show()
 
 #7. Save Model
+# https://youtu.be/LKispFFQ5GU?t=12836
 # Save weights
 siamese_model.save('siamesemodelv2.h5')
 

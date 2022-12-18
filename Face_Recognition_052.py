@@ -33,6 +33,9 @@ def preprocess(file_path):
     # Return image
     return img
 
+# 8.1 Verification Function
+# https://youtu.be/LKispFFQ5GU?t=13282
+# https://youtu.be/LKispFFQ5GU?t=13734
 def verify(model, detection_threshold, verification_threshold):
     # Build results array
     results = []
@@ -54,12 +57,17 @@ def verify(model, detection_threshold, verification_threshold):
     return results, verified
 
 
-L1Dist
+# L1Dist
 # Reload model
 siamese_model = tf.keras.models.load_model('siamesemodelv2.h5',
                                    custom_objects={'L1Dist':L1Dist, 'BinaryCrossentropy':tf.losses.BinaryCrossentropy})
 
+# for image in os.listdir(os.path.join('FR_05_application_data', 'verification_images')):
+#     validation_img = os.path.join('FR_05_application_data', 'verification_images', image)
+#     print(validation_img)
+
 # 8.2 OpenCV Real Time Verification
+# https://youtu.be/LKispFFQ5GU?t=14478
 cap = cv2.VideoCapture(0)
 while cap.isOpened():
     ret, frame = cap.read()
@@ -83,6 +91,7 @@ while cap.isOpened():
         cv2.imwrite(os.path.join('FR_05_application_data', 'input_image', 'input_image.jpg'), frame)
         # Run verification
         results, verified = verify(siamese_model, 0.5, 0.5)
+        # results, verified = verify(siamese_model, 0.9, 0.7)
         print(verified)
 
     if cv2.waitKey(10) & 0xFF == ord('q'):

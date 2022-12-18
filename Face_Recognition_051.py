@@ -45,9 +45,14 @@ ANC_PATH = os.path.join(DATA_PATH, 'anchor')
 # anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(3000)
 # positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(3000)
 # negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(3000)
-anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(300)
-positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(300)
-negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(300)
+# anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(300)
+# positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(300)
+# negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(300)
+
+anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(500)
+positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(500)
+negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(500)
+
 # dir_test = anchor.as_numpy_iterator()
 # print(dir_test.next())
 
@@ -284,7 +289,8 @@ def train(data, EPOCHS):
 
 # 5.5 Train the model
 # https://youtu.be/LKispFFQ5GU?t=11189
-EPOCHS = 50
+# EPOCHS = 50
+EPOCHS = 100
 train(train_data, EPOCHS)
 
 # 6. Evaluate Model

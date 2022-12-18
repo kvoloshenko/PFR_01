@@ -12,6 +12,18 @@ import tensorflow as tf
 keras = tf.keras
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Layer, Conv2D, Dense, MaxPooling2D, Input, Flatten
+from tensorflow.keras.utils import plot_model
+from tensorflow.keras.preprocessing import image
+# import matplotlib.pyplot as plt
+
+def f_plot_model(mod): # Выводим схему модели
+    plot_model(mod, dpi=60, show_shapes=True)
+    #model.png
+    image_1 = image.load_img('model.png')
+    plt.axis('off')
+    # plt.imshow(image_1, interpolation='nearest')
+    plt.imshow(image_1)
+    plt.show()
 
 # Avoid OOM errors by setting GPU Memory Consumption Growth
 gpus = tf.config.experimental.list_physical_devices('GPU')
@@ -102,3 +114,99 @@ test_data = test_data.prefetch(8)
 # https://youtu.be/LKispFFQ5GU?t=6674
 # 4. Model Engineering
 # 4.1 Build Embedding Layer
+# inp = Input(shape=(100,100,3), name='input_image')
+# c1 = Conv2D(64, (10,10), activation='relu')(inp)
+# m1 = MaxPooling2D(64, (2,2), padding='same')(c1)
+# c2 = Conv2D(128, (7,7), activation='relu')(m1)
+# m2 = MaxPooling2D(64, (2,2), padding='same')(c2)
+# c3 = Conv2D(128, (4,4), activation='relu')(m2)
+# m3 = MaxPooling2D(64, (2,2), padding='same')(c3)
+# c4 = Conv2D(256, (4,4), activation='relu')(m3)
+# f1 = Flatten()(c4)
+# d1 = Dense(4096, activation='sigmoid')(f1)
+# mod = Model(inputs=[inp], outputs=[d1], name='embedding')
+# print(mod.summary())
+# f_plot_model(mod) # Выводим схему модели
+
+
+def make_embedding():
+    inp = Input(shape=(100, 100, 3), name='input_image')
+
+    # First block
+    c1 = Conv2D(64, (10, 10), activation='relu')(inp)
+    m1 = MaxPooling2D(64, (2, 2), padding='same')(c1)
+
+    # Second block
+    c2 = Conv2D(128, (7, 7), activation='relu')(m1)
+    m2 = MaxPooling2D(64, (2, 2), padding='same')(c2)
+
+    # Third block
+    c3 = Conv2D(128, (4, 4), activation='relu')(m2)
+    m3 = MaxPooling2D(64, (2, 2), padding='same')(c3)
+
+    # Final embedding block
+    c4 = Conv2D(256, (4, 4), activation='relu')(m3)
+    f1 = Flatten()(c4)
+    d1 = Dense(4096, activation='sigmoid')(f1)
+
+    return Model(inputs=[inp], outputs=[d1], name='embedding')
+
+embedding = make_embedding()
+print(embedding.summary())
+f_plot_model(embedding) # Выводим схему модели
+
+# 4.2 Build Distance Layer
+# https://youtu.be/LKispFFQ5GU?t=8442
+
+# Siamese L1 Distance class
+class L1Dist(Layer):
+
+    # Init method - inheritance
+    def __init__(self, **kwargs):
+        super().__init__()
+
+    # Magic happens here - similarity calculation
+    def call(self, input_embedding, validation_embedding):
+        return tf.math.abs(input_embedding - validation_embedding)
+
+# l1 = L1Dist()
+# l1(anchor_embedding, validation_embedding)
+
+# 4.3 Make Siamese Model
+# input_image = Input(name='input_img', shape=(100,100,3))
+# validation_image = Input(name='validation_img', shape=(100,100,3))
+# inp_embedding = embedding(input_image)
+# val_embedding = embedding(validation_image)
+# siamese_layer = L1Dist()
+# distances = siamese_layer(inp_embedding, val_embedding)
+# classifier = Dense(1, activation='sigmoid')(distances)
+# classifier
+# siamese_network = Model(inputs=[input_image, validation_image], outputs=classifier, name='SiameseNetwork')
+#
+# print(siamese_network.summary())
+# f_plot_model(siamese_network) # Выводим схему модели
+
+
+def make_siamese_model():
+    # Anchor image input in the network
+    input_image = Input(name='input_img', shape=(100, 100, 3))
+
+    # Validation image in the network
+    validation_image = Input(name='validation_img', shape=(100, 100, 3))
+
+    # Combine siamese distance components
+    siamese_layer = L1Dist()
+    siamese_layer._name = 'distance'
+    distances = siamese_layer(embedding(input_image), embedding(validation_image))
+
+    # Classification layer
+    classifier = Dense(1, activation='sigmoid')(distances)
+
+    return Model(inputs=[input_image, validation_image], outputs=classifier, name='SiameseNetwork')
+
+siamese_model = make_siamese_model()
+print(siamese_model.summary())
+f_plot_model(siamese_model) # Выводим схему модели
+
+# 5. Training
+# 5.1 Setup Loss and Optimizer

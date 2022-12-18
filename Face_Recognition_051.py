@@ -209,5 +209,87 @@ print(siamese_model.summary())
 f_plot_model(siamese_model) # Выводим схему модели
 
 # 5. Training
-# 5.1 Setup Loss and Optimizer
 # https://youtu.be/LKispFFQ5GU?t=9476
+# 5.1 Setup Loss and Optimizer
+# https://youtu.be/LKispFFQ5GU?t=9747
+binary_cross_loss = tf.losses.BinaryCrossentropy()
+opt = tf.keras.optimizers.Adam(1e-4) # 0.0001
+
+# 5.2 Establish Checkpoints
+# https://youtu.be/LKispFFQ5GU?t=9881
+checkpoint_dir = './training_checkpoints'
+checkpoint_prefix = os.path.join(checkpoint_dir, 'ckpt')
+checkpoint = tf.train.Checkpoint(opt=opt, siamese_model=siamese_model)
+
+# 5.3 Build Train Step Function
+# https://youtu.be/LKispFFQ5GU?t=10080
+# test_batch = train_data.as_numpy_iterator()
+# batch_1 = test_batch.next()
+# X = batch_1[:2]
+# y = batch_1[2]
+# y
+@tf.function
+def train_step(batch):
+    # Record all of our operations
+    with tf.GradientTape() as tape:
+        # Get anchor and positive/negative image
+        X = batch[:2]
+        # Get label
+        y = batch[2]
+
+        # Forward pass
+        yhat = siamese_model(X, training=True)
+        # Calculate loss
+        loss = binary_cross_loss(y, yhat)
+    print(loss)
+
+    # Calculate gradients
+    grad = tape.gradient(loss, siamese_model.trainable_variables)
+
+    # Calculate updated weights and apply to siamese model
+    opt.apply_gradients(zip(grad, siamese_model.trainable_variables))
+
+    # Return loss
+    return loss
+
+# 5.4 Build Training Loop
+# https://youtu.be/LKispFFQ5GU?t=10947
+# Import metric calculations
+from tensorflow.keras.metrics import Precision, Recall
+
+
+def train(data, EPOCHS):
+    # Loop through epochs
+    for epoch in range(1, EPOCHS + 1):
+        print('\n Epoch {}/{}'.format(epoch, EPOCHS))
+        progbar = tf.keras.utils.Progbar(len(data))
+
+        # Creating a metric object
+        r = Recall()
+        p = Precision()
+
+        # Loop through each batch
+        for idx, batch in enumerate(data):
+            # Run train step here
+            loss = train_step(batch)
+            yhat = siamese_model.predict(batch[:2])
+            r.update_state(batch[2], yhat)
+            p.update_state(batch[2], yhat)
+            progbar.update(idx + 1)
+        print(loss.numpy(), r.result().numpy(), p.result().numpy())
+
+        # Save checkpoints
+        if epoch % 10 == 0:
+            checkpoint.save(file_prefix=checkpoint_prefix)
+
+# 5.5 Train the model
+# https://youtu.be/LKispFFQ5GU?t=11189
+EPOCHS = 50
+train(train_data, EPOCHS)
+
+# 6. Evaluate Model
+# https://youtu.be/LKispFFQ5GU?t=11390
+# 6.1 Import Metrics
+# https://youtu.be/LKispFFQ5GU?t=11431
+
+

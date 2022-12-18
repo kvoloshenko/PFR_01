@@ -292,4 +292,65 @@ train(train_data, EPOCHS)
 # 6.1 Import Metrics
 # https://youtu.be/LKispFFQ5GU?t=11431
 
+# Import metric calculations
+from tensorflow.keras.metrics import Precision, Recall
+
+# 6.2 Make Predictions
+
+# Get a batch of test data
+test_input, test_val, y_true = test_data.as_numpy_iterator().next()
+y_hat = siamese_model.predict([test_input, test_val])
+# Post processing the results
+# [1 if prediction > 0.5 else 0 for prediction in y_hat ]
+#
+print(type(y_true), f'y_true={y_true}')
+
+# 6.3 Calculate Metrics
+# Creating a metric object
+m = Recall()
+
+# Calculating the recall value
+m.update_state(y_true, y_hat)
+
+# Return Recall Result
+print(m.result().numpy())
+
+# Creating a metric object
+m = Precision()
+
+# Calculating the recall value
+m.update_state(y_true, y_hat)
+
+# Return Recall Result
+print(m.result().numpy())
+
+r = Recall()
+p = Precision()
+
+for test_input, test_val, y_true in test_data.as_numpy_iterator():
+    yhat = siamese_model.predict([test_input, test_val])
+    r.update_state(y_true, yhat)
+    p.update_state(y_true,yhat)
+
+print(r.result().numpy(), p.result().numpy())
+
+# 6.4 Viz Results
+
+# Set plot size
+plt.figure(figsize=(10,8))
+
+# Set first subplot
+plt.subplot(1,2,1)
+plt.imshow(test_input[0])
+
+# Set second subplot
+plt.subplot(1,2,2)
+plt.imshow(test_val[0])
+
+# Renders cleanly
+plt.show()
+
+#7. Save Model
+# Save weights
+siamese_model.save('siamesemodelv2.h5')
 

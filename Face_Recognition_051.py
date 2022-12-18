@@ -210,3 +210,4 @@ f_plot_model(siamese_model) # Выводим схему модели
 
 # 5. Training
 # 5.1 Setup Loss and Optimizer
+# https://youtu.be/LKispFFQ5GU?t=9476

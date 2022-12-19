@@ -40,12 +40,19 @@ ANC_PATH = os.path.join(DATA_PATH, 'anchor')
 # anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(3000)
 # positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(3000)
 # negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(3000)
+anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(1000)
+positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(1000)
+negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(1000)
 # anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(500)
 # positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(500)
 # negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(500)
-anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(300)
-positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(300)
-negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(300)
+# anchor = tf.data.Dataset.list_files(ANC_PATH+'\*.jpg').take(300)
+# positive = tf.data.Dataset.list_files(POS_PATH+'\*.jpg').take(300)
+# negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(300)
+
+print(f' len(anchor)= {len(anchor)}', type(anchor))
+print(f' len(positive)= {len(positive)}', type(positive))
+print(f' len(negative)= {len(negative)}', type(negative))
 
 # 3.3 Create Labelled Dataset
 # (anchor, positive) => 1,1,1,1,1
@@ -53,6 +60,7 @@ negative = tf.data.Dataset.list_files(NEG_PATH+'\*.jpg').take(300)
 positives = tf.data.Dataset.zip((anchor, positive, tf.data.Dataset.from_tensor_slices(tf.ones(len(anchor)))))
 negatives = tf.data.Dataset.zip((anchor, negative, tf.data.Dataset.from_tensor_slices(tf.zeros(len(anchor)))))
 data = positives.concatenate(negatives)
+print(f'! len(data)= {len(data)}', type(data))
 samples = data.as_numpy_iterator()
 exampple = samples.next()
 print(exampple)
@@ -71,15 +79,24 @@ data = data.map(preprocess_twin)
 data = data.cache()
 data = data.shuffle(buffer_size=1024)
 # data = data.shuffle(buffer_size=10000)
+print(f'* len(data)= {len(data)}', type(data))
 # Training partition
-train_data = data.take(round(len(data)*.7))
-train_data = train_data.batch(16)
-train_data = train_data.prefetch(8)
+train_data = data.take(round(len(data) * 0.7))
+# train_data = train_data.batch(16)
+train_data = train_data.batch(128)
+# train_data = train_data.prefetch(8)
+print(f' len(train_data)= {len(train_data)}', type(train_data))
+
+
 # Testing partition
-test_data = data.skip(round(len(data)*.7))
-test_data = test_data.take(round(len(data)*.3))
-test_data = test_data.batch(16)
-test_data = test_data.prefetch(8)
+test_data = data.skip(round(len(data) * 0.7))
+test_data = test_data.take(round(len(data) * 0.3))
+# test_data = test_data.batch(16)
+test_data = test_data.batch(128)
+# test_data = test_data.prefetch(8)
+print(f' len(test_data)= {len(test_data)}', type(test_data))
+
+
 
 # 4. Model Engineering
 # 4.1 Build Embedding Layer
@@ -182,6 +199,9 @@ from tensorflow.keras.metrics import Precision, Recall
 
 
 def train(data, EPOCHS):
+    l_loss = []
+    l_recall = []
+    l_precision = []
     # Loop through epochs
     for epoch in range(1, EPOCHS + 1):
         print('\n Epoch {}/{}'.format(epoch, EPOCHS))
@@ -200,16 +220,29 @@ def train(data, EPOCHS):
             p.update_state(batch[2], yhat)
             progbar.update(idx + 1)
         print(loss.numpy(), r.result().numpy(), p.result().numpy())
+        l_loss.append(loss.numpy())
+        l_recall.append(r.result().numpy())
+        l_precision.append(p.result().numpy())
 
         # Save checkpoints
         if epoch % 10 == 0:
             checkpoint.save(file_prefix=checkpoint_prefix)
+    return l_loss, l_recall, l_precision
 
 # 5.5 Train the model
 # https://youtu.be/LKispFFQ5GU?t=11189
 EPOCHS = 50
 # EPOCHS = 100
-train(train_data, EPOCHS)
+loss, recall, precision = train(train_data, EPOCHS)
+
+plt.title(f'Модель siamese_model. График точности обучения')
+plt.plot(loss, label='loss')
+plt.plot(recall, label='recall')
+plt.plot(precision, label='precision')
+# plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend()
+plt.show()
 
 # 6. Evaluate Model
 # https://youtu.be/LKispFFQ5GU?t=11390
@@ -247,7 +280,7 @@ m = Recall()
 m.update_state(y_true, y_hat)
 
 # Return Recall Result
-print(m.result().numpy())
+print('Recall Result: ', m.result().numpy())
 
 # Creating a metric object
 m = Precision()
@@ -255,8 +288,8 @@ m = Precision()
 # Calculating the recall value
 m.update_state(y_true, y_hat)
 
-# Return Recall Result
-print(m.result().numpy())
+# Return Precision Result
+print('Precision Result: ', m.result().numpy())
 
 r = Recall()
 p = Precision()
@@ -266,7 +299,7 @@ for test_input, test_val, y_true in test_data.as_numpy_iterator():
     r.update_state(y_true, yhat)
     p.update_state(y_true,yhat)
 
-print(r.result().numpy(), p.result().numpy())
+print('Recall: ', r.result().numpy(), 'Precision: ', p.result().numpy())
 
 # 6.4 Viz Results
 # https://youtu.be/LKispFFQ5GU?t=12411
@@ -288,6 +321,6 @@ plt.show()
 #7. Save Model
 # https://youtu.be/LKispFFQ5GU?t=12836
 # Save weights
-# siamese_model.save('siamesemodelv2.h5')
+siamese_model.save('siamesemodelv2.h5')
 
 

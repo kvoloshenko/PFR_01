@@ -136,3 +136,5 @@ dmypy.json
 /images_kv/
 /FR_05_data/
 /catboost_info/
+/FD_02_data/
+/FR_05_application_data/

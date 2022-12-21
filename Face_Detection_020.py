@@ -10,7 +10,8 @@ import json
 import numpy as np
 from matplotlib import pyplot as plt
 
-IMAGES_PATH = os.path.join('data','images')
+DATA_PATH = 'FD_02_data'
+IMAGES_PATH = os.path.join(DATA_PATH,'images')
 number_images = 30
 
 # cap = cv2.VideoCapture(0)
@@ -27,14 +28,21 @@ number_images = 30
 # cap.release()
 # cv2.destroyAllWindows()
 
-# Avoid OOM errors by setting GPU Memory Consumption Growth
+# 1.3 Annotate Images with LabelMe
+# https://youtu.be/N_W4EYtsa10?t=1236
+# https://github.com/wkentaro/labelme
+# !labelme
+
+
+# # Avoid OOM errors by setting GPU Memory Consumption Growth
 gpus = tf.config.experimental.list_physical_devices('GPU')
 for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
-tf.config.list_physical_devices('GPU')
+print(tf.config.list_physical_devices('GPU'))
 
-#2.3 Load Image into TF Data Pipeline
-images = tf.data.Dataset.list_files('data\\images\\*.jpg')
+#
+# #2.3 Load Image into TF Data Pipeline
+images = tf.data.Dataset.list_files(DATA_PATH + '\\images\\*.jpg')
 images.as_numpy_iterator().next()
 def load_image(x):
     byte_img = tf.io.read_file(x)
@@ -43,12 +51,15 @@ def load_image(x):
 images = images.map(load_image)
 images.as_numpy_iterator().next()
 print (type(images))
-
-# 2.4 View Raw Images with Matplotlib
+#
+# # 2.4 View Raw Images with Matplotlib
 image_generator = images.batch(4).as_numpy_iterator()
 plot_images = image_generator.next()
-fig, ax = plt.subplots(ncols=4, figsize=(20,20))
+fig, ax = plt.subplots(ncols=4, figsize=(15, 15))
 for idx, image in enumerate(plot_images):
     ax[idx].imshow(image)
 plt.show()
 
+# 3. Partition Unaugmented Data
+# 3.1 MANUALLY SPLT DATA INTO TRAIN TEST AND VAL
+# https://youtu.be/N_W4EYtsa10?t=2740

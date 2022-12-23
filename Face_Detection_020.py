@@ -185,3 +185,66 @@ val_images = val_images.map(lambda x: x/255)
 # 6. Prepare Labels
 # 6.1 Build Label Loading Function
 # https://youtu.be/N_W4EYtsa10?t=4514
+
+def load_labels(label_path):
+    with open(label_path.numpy(), 'r', encoding="utf-8") as f:
+        label = json.load(f)
+
+    return [label['class']], label['bbox']
+
+# 6.2 Load Labels to Tensorflow Dataset
+# https://youtu.be/N_W4EYtsa10?t=4595
+train_labels = tf.data.Dataset.list_files(AUG_DATA_PATH + '\\train\\labels\\*.json', shuffle=False)
+train_labels = train_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+test_labels = tf.data.Dataset.list_files(AUG_DATA_PATH + '\\test\\labels\\*.json', shuffle=False)
+test_labels = test_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+val_labels = tf.data.Dataset.list_files(AUG_DATA_PATH + '\\val\\labels\\*.json', shuffle=False)
+val_labels = val_labels.map(lambda x: tf.py_function(load_labels, [x], [tf.uint8, tf.float16]))
+# train_labels.as_numpy_iterator().next()
+
+# 7. Combine Label and Image Samples
+# 7.1 Check Partition Lengths
+# https://youtu.be/N_W4EYtsa10?t=4747
+print(f'len(train_images)={len(train_images)}')
+print(f'len(train_labels)={len(train_labels)}')
+print(f'len(test_images)={len(test_images)}')
+print(f'len(test_labels)={len(test_labels)}')
+print(f'len(val_images)={len(val_images)}')
+print(f'len(val_labels)={len(val_labels)}')
+
+# 7.2 Create Final Datasets (Images/Labels)
+# https://youtu.be/N_W4EYtsa10?t=4808
+train = tf.data.Dataset.zip((train_images, train_labels))
+train = train.shuffle(5000)
+train = train.batch(8)
+train = train.prefetch(4)
+test = tf.data.Dataset.zip((test_images, test_labels))
+test = test.shuffle(1300)
+test = test.batch(8)
+test = test.prefetch(4)
+val = tf.data.Dataset.zip((val_images, val_labels))
+val = val.shuffle(1000)
+val = val.batch(8)
+val = val.prefetch(4)
+# train.as_numpy_iterator().next()[1]
+
+# 7.3 View Images and Annotations
+# https://youtu.be/N_W4EYtsa10?t=4968
+data_samples = train.as_numpy_iterator()
+res = data_samples.next()
+fig, ax = plt.subplots(ncols=4, figsize=(15, 15))
+for idx in range(4):
+    sample_image = res[0][idx]
+    sample_coords = res[1][1][idx]
+
+    cv2.rectangle(sample_image,
+                  tuple(np.multiply(sample_coords[:2], [120, 120]).astype(int)),
+                  tuple(np.multiply(sample_coords[2:], [120, 120]).astype(int)),
+                  (255, 0, 0), 2)
+
+    ax[idx].imshow(sample_image)
+plt.show()
+
+# 8. Build Deep Learning using the Functional API
+# 8.1 Import Layers and Base Network
+# https://youtu.be/N_W4EYtsa10?t=5163

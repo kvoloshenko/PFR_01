@@ -6,14 +6,26 @@ import time
 import uuid
 import cv2
 import tensorflow as tf
+keras = tf.keras
 import json
 import numpy as np
 from matplotlib import pyplot as plt
+from tensorflow.keras.utils import plot_model
+from tensorflow.keras.preprocessing import image
 
 DATA_PATH = 'FD_02_data'
 AUG_DATA_PATH = 'FD_02_aug_data'
 IMAGES_PATH = os.path.join(DATA_PATH,'images')
 number_images = 30
+
+def f_plot_model(mod): # Выводим схему модели
+    plot_model(mod, dpi=60, show_shapes=True)
+    #model.png
+    image_1 = image.load_img('model.png')
+    plt.axis('off')
+    # plt.imshow(image_1, interpolation='nearest')
+    plt.imshow(image_1)
+    plt.show()
 
 # cap = cv2.VideoCapture(0)
 # for imgnum in range(number_images):
@@ -248,3 +260,54 @@ plt.show()
 # 8. Build Deep Learning using the Functional API
 # 8.1 Import Layers and Base Network
 # https://youtu.be/N_W4EYtsa10?t=5163
+
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Conv2D, Dense, GlobalMaxPooling2D
+from tensorflow.keras.applications import VGG16
+
+# 8.2 Download VGG16
+# https://youtu.be/N_W4EYtsa10?t=5321
+vgg = VGG16(include_top=False)
+print (vgg.summary())
+f_plot_model(vgg) # Выводим схему модели
+
+# 8.3 Build instance of Network
+# https://youtu.be/N_W4EYtsa10?t=5524
+def build_model():
+    input_layer = Input(shape=(120, 120, 3))
+
+    vgg = VGG16(include_top=False)(input_layer)
+
+    # Classification Model
+    f1 = GlobalMaxPooling2D()(vgg)
+    class1 = Dense(2048, activation='relu')(f1)
+    class2 = Dense(1, activation='sigmoid')(class1)
+
+    # Bounding box model
+    f2 = GlobalMaxPooling2D()(vgg)
+    regress1 = Dense(2048, activation='relu')(f2)
+    regress2 = Dense(4, activation='sigmoid')(regress1)
+
+    facetracker = Model(inputs=input_layer, outputs=[class2, regress2])
+    return facetracker
+
+# 8.4 Test out Neural Network
+# https://youtu.be/N_W4EYtsa10?t=5914
+facetracker = build_model()
+print(facetracker.summary())
+f_plot_model(facetracker) # Выводим схему модели
+
+X, y = train.as_numpy_iterator().next()
+print (f'X.shape = {X.shape}')
+classes, coords = facetracker.predict(X)
+print(f'classes={classes}, coords={coords}')
+
+# 9. Define Losses and Optimizers
+# 9.1 Define Optimizer and LR
+# https://youtu.be/N_W4EYtsa10?t=6082
+batches_per_epoch = len(train)
+lr_decay = (1./0.75 -1)/batches_per_epoch
+opt = tf.keras.optimizers.Adam(learning_rate=0.0001, decay=lr_decay)
+
+
+

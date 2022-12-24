@@ -1,4 +1,4 @@
-#
+# Build a Deep Face Detection Model with Python and Tensorflow | Full Course
 # https://github.com/nicknochnack/FaceDetection/blob/main/FaceDetection.ipynb
 # https://youtu.be/N_W4EYtsa10
 
@@ -386,7 +386,8 @@ model.compile(opt, classloss, regressloss)
 # https://youtu.be/N_W4EYtsa10?t=6860
 logdir = 'FD_02_logs'
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
-hist = model.fit(train, epochs=10, validation_data=val, callbacks=[tensorboard_callback])
+# hist = model.fit(train, epochs=10, validation_data=val, callbacks=[tensorboard_callback])
+hist = model.fit(train, epochs=40, validation_data=val, callbacks=[tensorboard_callback])
 
 # 10.3 Plot Performance
 # https://youtu.be/N_W4EYtsa10?t=7171
@@ -409,10 +410,34 @@ ax[2].title.set_text('Regression Loss')
 ax[2].legend()
 
 plt.show()
-
+# TODO
 # print (model.summary())
 # f_plot_model(model) # Выводим схему модели
+# 11. Make Predictions
+# 11.1 Make Predictions on Test Set
 # https://youtu.be/N_W4EYtsa10?t=7389
+
+test_data = test.as_numpy_iterator()
+test_sample = test_data.next()
+yhat = facetracker.predict(test_sample[0])
+fig, ax = plt.subplots(ncols=4, figsize=(20, 20))
+for idx in range(4):
+    sample_image = test_sample[0][idx]
+    sample_coords = yhat[1][idx]
+
+    if yhat[0][idx] > 0.9:
+        cv2.rectangle(sample_image,
+                      tuple(np.multiply(sample_coords[:2], [120, 120]).astype(int)),
+                      tuple(np.multiply(sample_coords[2:], [120, 120]).astype(int)),
+                      (255, 0, 0), 2)
+
+    ax[idx].imshow(sample_image)
+
+# 11.2 Save the Model
+from tensorflow.keras.models import load_model
+facetracker.save('facetracker.h5')
+# facetracker = load_model('facetracker.h5')
+# 11.3 Real Time Detection
 
 
 

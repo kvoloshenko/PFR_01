@@ -1,3 +1,7 @@
+# Build a Deep Face Detection Model with Python and Tensorflow | Full Course
+# https://github.com/nicknochnack/FaceDetection/blob/main/FaceDetection.ipynb
+# https://youtu.be/N_W4EYtsa10
+
 import os
 import time
 import uuid
@@ -14,6 +18,7 @@ from tensorflow.keras.models import load_model
 
 facetracker = load_model('facetracker.h5')
 # 11.3 Real Time Detection
+# https://youtu.be/N_W4EYtsa10?t=8191
 
 cap = cv2.VideoCapture(0)
 while cap.isOpened():

@@ -410,9 +410,7 @@ ax[2].title.set_text('Regression Loss')
 ax[2].legend()
 
 plt.show()
-# TODO
-# print (model.summary())
-# f_plot_model(model) # Выводим схему модели
+
 # 11. Make Predictions
 # 11.1 Make Predictions on Test Set
 # https://youtu.be/N_W4EYtsa10?t=7389
@@ -434,6 +432,8 @@ for idx in range(4):
     ax[idx].imshow(sample_image)
 
 # 11.2 Save the Model
+# https://youtu.be/N_W4EYtsa10?t=8163
+
 from tensorflow.keras.models import load_model
 facetracker.save('facetracker.h5')
 # facetracker = load_model('facetracker.h5')

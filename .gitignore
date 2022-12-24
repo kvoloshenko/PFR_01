@@ -140,3 +140,10 @@ dmypy.json
 /FR_05_application_data/
 /FD_02_aug_data/
 /FD_02_logs/
+/facetracker.h5
+/siamesemodelv2.h5
+/siamesemodelv2_001.h5
+/siamesemodelv2_002.h5
+/siamesemodelv2_003.h5
+/model.png
+/lfw.tgz

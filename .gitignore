@@ -138,3 +138,5 @@ dmypy.json
 /catboost_info/
 /FD_02_data/
 /FR_05_application_data/
+/FD_02_aug_data/
+/FD_02_logs/

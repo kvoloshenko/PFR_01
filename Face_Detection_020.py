@@ -1,3 +1,4 @@
+#
 # https://github.com/nicknochnack/FaceDetection/blob/main/FaceDetection.ipynb
 # https://youtu.be/N_W4EYtsa10
 
@@ -332,7 +333,8 @@ print(f'regressloss={regressloss(y[1], coords)}')
 
 # 10. Train Neural Network
 # 10.1 Create Custom Model Class
-#
+# https://youtu.be/N_W4EYtsa10?t=6359
+
 class FaceTracker(Model):
     def __init__(self, eyetracker, **kwargs):
         super().__init__(**kwargs)
@@ -378,15 +380,16 @@ class FaceTracker(Model):
 
 model = FaceTracker(facetracker)
 model.compile(opt, classloss, regressloss)
-# print (model.summary())
-# f_plot_model(model) # Выводим схему модели
+
 
 # 10.2 Train
-logdir='FD_02_logs'
+# https://youtu.be/N_W4EYtsa10?t=6860
+logdir = 'FD_02_logs'
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
 hist = model.fit(train, epochs=10, validation_data=val, callbacks=[tensorboard_callback])
 
 # 10.3 Plot Performance
+# https://youtu.be/N_W4EYtsa10?t=7171
 hist.history
 fig, ax = plt.subplots(ncols=3, figsize=(20,5))
 
@@ -407,6 +410,9 @@ ax[2].legend()
 
 plt.show()
 
+# print (model.summary())
+# f_plot_model(model) # Выводим схему модели
+# https://youtu.be/N_W4EYtsa10?t=7389
 
 
 

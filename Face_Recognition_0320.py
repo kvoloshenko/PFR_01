@@ -1,3 +1,4 @@
+# FACE RECOGNITION + ATTENDANCE PROJECT | OpenCV Python | Computer Vision
 # FACE RECOGNITION + ATTENDANCE PROJECT
 # https://youtu.be/sz25xxF_AVE?t=1228
 
@@ -29,23 +30,10 @@ def findEncodings(images):
         encodeList.append(encode)
     return encodeList
 
-def markAttendance(name):
-    with open('Attendance.csv','r+') as f:
-        myDataList = f.readlines()
-        nameList = []
-        for line in myDataList:
-            entry = line.split(',')
-            nameList.append(entry[0])
-        if name not in nameList:
-            now = datetime.now()
-            dtString = now.strftime('%H:%M:%S')
-            f.writelines(f'n{name},{dtString}')
-
 def data_save_json(data, file):
     # path = os.path.join('', 'json_output', file)
     with open(file, 'w', encoding='utf8') as f:
         json.dump(data, f)
-
 
 encodeListKnown = findEncodings(images)
 print(len(encodeListKnown))
@@ -66,11 +54,12 @@ frame_height = int(cap.get(4))
 fps = cap.get(cv2.CAP_PROP_FPS)
 print(f' frame_width={frame_width} frame_height={frame_height} fps={fps}')
 video_out_file = video_file_path + video_file_name + '_out' + video_file_name_ext
-out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
+# out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
 
 # Initialize count
 count = 0
 faces_found = []
+faces_found_first = []
 faces_names = []
 start_time = time.time() #Время начала обработки
 print(f'start_time={start_time}')
@@ -103,7 +92,6 @@ while True:
             cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
             cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
             cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-            # markAttendance(name)
             frm_dic['name'] = name
             frm_dic['frame_num'] = int(count)
             frm_dic['x1'] = int(x1)
@@ -114,14 +102,15 @@ while True:
             frm_dic['time_sec'] = time_sec
             # print(type(frm_dic), f' frm_dic={frm_dic}')
             faces_found.append(frm_dic)
-            faces_names.append(name)
+            if name not in faces_names:
+                faces_names.append(name)
+                faces_found_first.append(frm_dic)
 
-    # cv2.imshow('img RGB', imgS)
-    cv2.imshow('img RGB', img)
-    out.write(img)
-    key = cv2.waitKey(1)
-    if key == 27:
-        break
+    # cv2.imshow('img RGB', img)
+    # out.write(img)
+    # key = cv2.waitKey(1)
+    # if key == 27:
+    #     break
 
 run_time = time.time() - start_time
 print("--- %s seconds ---" % run_time) #Время окончания обработки
@@ -131,16 +120,6 @@ print(type(faces_found), f'faces_found={faces_found}')
 json_file = video_file_path + video_file_name + '.json'
 data_save_json(faces_found, json_file)
 
-faces_one = set(faces_names)
-print(type(faces_one), f'faces_one={faces_one}')
-faces_found_first = []
-for name in faces_one:
-    for item in faces_found:
-        if item['name'] == name:
-            # time_sec = round(item['frame_num'] / fps)
-            # item['time_sec'] = time_sec
-            faces_found_first.append(item)
-            break
 
 print(type(faces_found_first), f'faces_found_first={faces_found_first}')
 # json_string = json.dumps(faces_found_first)
@@ -148,5 +127,5 @@ json_file = video_file_path + video_file_name + '_first' + '.json'
 data_save_json(faces_found_first, json_file)
 
 cap.release()
-out.release()
+# out.release()
 cv2.destroyAllWindows()

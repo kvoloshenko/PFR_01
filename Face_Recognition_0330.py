@@ -1,3 +1,4 @@
+# FACE RECOGNITION + ATTENDANCE PROJECT | OpenCV Python | Computer Vision
 # FACE RECOGNITION + ATTENDANCE PROJECT
 # https://youtu.be/sz25xxF_AVE?t=1228
 # Останавливаем обработку после первого найденного

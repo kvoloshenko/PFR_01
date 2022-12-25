@@ -1,3 +1,4 @@
+# Latest 60 Fps FACE Detection | OpenCV Python | Computer Vision
 #https://youtu.be/jn1HSXVmIrA
 # Face_Recognition_03_Module_01
 import cv2

@@ -1,3 +1,4 @@
+# Build a Python Facial Recognition App with Tensorflow and Kivy
 #https://www.youtube.com/watch?v=LKispFFQ5GU
 # https://github.com/nicknochnack/FaceRecognition/blob/main/Facial%20Verification%20with%20a%20Siamese%20Network%20-%20Final.ipynb
 

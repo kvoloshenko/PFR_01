@@ -1,3 +1,5 @@
+# Распознавание лиц с InsightFace или как CatBoost имена угадывал
+# Face recognition with InsightFace or how CatBoost guessed names
 # https://habr.com/ru/post/699232/
 
 import os

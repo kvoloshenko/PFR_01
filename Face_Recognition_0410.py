@@ -1,3 +1,4 @@
+# How to use insightface
 # https://snyk.io/advisor/python/insightface/example
 # https://github.com/nizhib/pytorch-insightface/blob/8596a0b73e34695eb6235e95473c9908325f9bf9/insightface/iresnet.py#L153
 

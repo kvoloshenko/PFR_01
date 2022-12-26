@@ -26,5 +26,15 @@ FACE RECOGNITION + ATTENDANCE PROJECT | OpenCV Python | Computer Vision
 
 see the original idea at:  https://youtu.be/sz25xxF_AVE
 
+## Face_Recognition_0400, Face_Recognition_0410
+Face recognition with InsightFace or how CatBoost guessed names
+see the original idea at: https://habr.com/ru/post/699232/
+
+## Face_Recognition_0501, Face_Recognition_0511, Face_Recognition_0512, Face_Recognition_0520, Face_Recognition_0521
+
+Build a Python Facial Recognition App with Tensorflow and Kivy
+
+see the original idea at: https://www.youtube.com/watch?v=LKispFFQ5GU
+
 ## Face recognition on the dance video. Example 03
 See video example here: https://youtu.be/PGwXDUTSHDU

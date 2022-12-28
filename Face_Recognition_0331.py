@@ -6,7 +6,7 @@
 
 import cv2
 import numpy as np
-import face_recognition
+import face_recognition # https://github.com/ageitgey/face_recognition#face-recognition
 import os
 import time
 from datetime import datetime
@@ -24,6 +24,28 @@ def data_save_json(data, file):
     # path = os.path.join('', 'json_output', file)
     with open(file, 'w', encoding='utf8') as f:
         json.dump(data, f)
+
+def faceDetection_01(imgS):
+    import tensorflow as tf
+    from tensorflow.keras.models import load_model
+    facesCurFrame = []
+
+    facetracker = load_model('facetracker.h5')
+
+    rgb = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
+    resized = tf.image.resize(rgb, (120, 120))
+    yhat = facetracker.predict(np.expand_dims(resized / 255, 0))
+    sample_coords = yhat[1][0]
+    print (type(sample_coords), f'sample_coords={sample_coords}')
+    # TODO facesCurFrame.append
+    sample_coords[:2]
+    print(f'sample_coords = {sample_coords}')
+    # print(f'sample_coords[:2] = {sample_coords[:2]}')
+    # print(f'sample_coords[2:] = {sample_coords[2:]}')
+    # facesCurFrame.append(tuple(sample_coords))
+    facesCurFrame.append(tuple(np.multiply(sample_coords, [450, 450, 450, 450]).astype(int)))
+    print(f'facesCurFrame={facesCurFrame}')
+    return facesCurFrame
 
 
 def findFacesOnVideo(video_file):
@@ -56,9 +78,13 @@ def findFacesOnVideo(video_file):
         imgS = cv2.resize(img, (0, 0), None, size_reduction_factor, size_reduction_factor)
         imgSRGB = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
 
+        # Face Detection:
         facesCurFrame = face_recognition.face_locations(imgSRGB)
+        # TODO
+        # facesCurFrame = faceDetection_01(imgS)
+        # faceDetection_01(imgS)
         if len(facesCurFrame) > 0: # When on the frame exit one or more faces:
-            print(f'count = {count} len(facesCurFrame)={len(facesCurFrame)} facesCurFrame={facesCurFrame}')
+            print(f'{count} {len(facesCurFrame)} facesCurFrame={facesCurFrame}')
             for detected_face in facesCurFrame:
                 y1, x2, y2, x1 = detected_face
                 # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
@@ -66,40 +92,43 @@ def findFacesOnVideo(video_file):
                 y1, x2, y2, x1 = y1 * size_recovery_multiplier, x2 * size_recovery_multiplier, y2 * size_recovery_multiplier, x1 * size_recovery_multiplier
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
+                # Face Recognition:
+                encodesCurFrame = face_recognition.face_encodings(imgSRGB, facesCurFrame)
+                frm_dic = {}
+                for encodeFace, faceLoc in zip(encodesCurFrame, facesCurFrame):
+                    # matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
+                    matches = face_recognition.compare_faces(encodeListKnown, encodeFace, 0.5)
+                    faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
+                    # print(faceDis)
+                    matchIndex = np.argmin(faceDis)
+                    if matches[matchIndex]:
+                        name = classNames[matchIndex]
+                        print(name)
 
-        encodesCurFrame = face_recognition.face_encodings(imgSRGB, facesCurFrame)
-        frm_dic = {}
-        for encodeFace, faceLoc in zip(encodesCurFrame, facesCurFrame):
-            # matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
-            matches = face_recognition.compare_faces(encodeListKnown, encodeFace, 0.5)
-            faceDis = face_recognition.face_distance(encodeListKnown, encodeFace)
-            # print(faceDis)
-            matchIndex = np.argmin(faceDis)
-            if matches[matchIndex]:
-                name = classNames[matchIndex]
-                print(name)
-
-                y1, x2, y2, x1 = faceLoc
-                # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                # y1, x2, y2, x1 = y1 * 2, x2 * 2, y2 * 2, x1 * 2
-                y1, x2, y2, x1 = y1 * size_recovery_multiplier, x2 * size_recovery_multiplier, y2 * size_recovery_multiplier, x1 * size_recovery_multiplier
-                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
-                frm_dic['name'] = name
-                frm_dic['frame_num'] = int(count)
-                frm_dic['x1'] = int(x1)
-                frm_dic['y1'] = int(y1)
-                frm_dic['x2'] = int(x2)
-                frm_dic['y2'] = int(y2)
-                time_sec = round(int(count) / fps)
-                frm_dic['time_sec'] = time_sec
-                # print(type(frm_dic), f' frm_dic={frm_dic}')
-                faces_found.append(frm_dic)
-                if name not in faces_names:
-                    faces_names.append(name)
-                    faces_found_first.append(frm_dic)
-                    print(f'len(faces_found_first)={len(faces_found_first)}')
+                        y1, x2, y2, x1 = faceLoc
+                        # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+                        # y1, x2, y2, x1 = y1 * 2, x2 * 2, y2 * 2, x1 * 2
+                        y1, x2, y2, x1 = y1 * size_recovery_multiplier, \
+                                         x2 * size_recovery_multiplier, \
+                                         y2 * size_recovery_multiplier, \
+                                         x1 * size_recovery_multiplier
+                        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                        cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                        cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+                        frm_dic['name'] = name
+                        frm_dic['frame_num'] = int(count)
+                        frm_dic['x1'] = int(x1)
+                        frm_dic['y1'] = int(y1)
+                        frm_dic['x2'] = int(x2)
+                        frm_dic['y2'] = int(y2)
+                        time_sec = round(int(count) / fps)
+                        frm_dic['time_sec'] = time_sec
+                        # print(type(frm_dic), f' frm_dic={frm_dic}')
+                        faces_found.append(frm_dic)
+                        if name not in faces_names:
+                            faces_names.append(name)
+                            faces_found_first.append(frm_dic)
+                            print(f'len(faces_found_first)={len(faces_found_first)}')
 
         cv2.imshow('img RGB', img)
         # out.write(img)

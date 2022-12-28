@@ -13,6 +13,8 @@ see the original idea at:  https://youtu.be/N_W4EYtsa10
 
 https://github.com/nicknochnack/FaceDetection/blob/main/FaceDetection.ipynb
 
+**_Note:_** Only one face per frame is detected, so we need multi face detection!
+
 ## Face_Recognition_0100, Face_Recognition_0200, Face_Recognition_0210
 
 Face recognition in real-time | with Opencv and Python
@@ -25,6 +27,8 @@ https://pysource.com/2021/08/16/face-recognition-in-real-time-with-opencv-and-py
 FACE RECOGNITION + ATTENDANCE PROJECT | OpenCV Python | Computer Vision
 
 see the original idea at:  https://youtu.be/sz25xxF_AVE
+
+**_Note:_** Have a problem with low performance, the reason is dlib doesn't use GPU (dlib.DLIB_USE_CUDA = False).
 
 ## Face_Recognition_0400, Face_Recognition_0410
 Face recognition with InsightFace or how CatBoost guessed names

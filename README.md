@@ -30,6 +30,9 @@ see the original idea at:  https://youtu.be/sz25xxF_AVE
 
 **_Note:_** Have a problem with low performance, the reason is dlib doesn't use GPU (dlib.DLIB_USE_CUDA = False).
 
+### Face recognition on the dance video. Example 03
+See video example here: https://youtu.be/PGwXDUTSHDU
+
 ## Face_Recognition_0400, Face_Recognition_0410
 Face recognition with InsightFace or how CatBoost guessed names
 see the original idea at: https://habr.com/ru/post/699232/
@@ -40,5 +43,4 @@ Build a Python Facial Recognition App with Tensorflow and Kivy
 
 see the original idea at: https://www.youtube.com/watch?v=LKispFFQ5GU
 
-## Face recognition on the dance video. Example 03
-See video example here: https://youtu.be/PGwXDUTSHDU
+

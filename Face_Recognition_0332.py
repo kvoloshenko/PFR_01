@@ -54,7 +54,8 @@ def findFacesOnVideo(video_file):
     frame_height = int(cap.get(4))
     fps = cap.get(cv2.CAP_PROP_FPS)
     print(f' frame_width={frame_width} frame_height={frame_height} fps={fps}')
-    # out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
+    video_out_file = video_file + '_out.mp4'
+    out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
 
     # Initialize count
     count = 0
@@ -63,9 +64,17 @@ def findFacesOnVideo(video_file):
     faces_names = []
     start_time = time.time()  # Время начала обработки
     # size_reduction_factor = 0.25
-    size_reduction_factor = 0.5
     # size_recovery_multiplier = 4
+
+    size_reduction_factor = 0.5
     size_recovery_multiplier = 2
+
+    # size_reduction_factor = 0.33
+    # size_recovery_multiplier = 3
+
+    # size_reduction_factor = 1
+    # size_recovery_multiplier = 1
+
     # print(f'start_time={start_time}')
 
     while True:
@@ -131,14 +140,14 @@ def findFacesOnVideo(video_file):
                             print(f'len(faces_found_first)={len(faces_found_first)}')
 
         cv2.imshow('img RGB', img)
-        # out.write(img)
+        out.write(img)
         key = cv2.waitKey(1)
         if key == 27:
             break
 
         # Прерываем цикл, когда нашли первый раз
-        if len(faces_found_first) > 0:
-            break
+        # if len(faces_found_first) > 0:
+        #     break
 
     run_time = time.time() - start_time
 
@@ -158,13 +167,13 @@ def findFacesOnVideo(video_file):
 
     print("--- %s seconds ---" % run_time)  # Время окончания обработки
     cap.release()
-    # out.release()
+    out.release()
     cv2.destroyAllWindows()
 
 # ------------------
 
-# path = 'images'
-path = 'images_kv'
+path = 'images'
+# path = 'imagoies_kv'
 images = []
 classNames = []
 myList = os.listdir(path)
@@ -181,7 +190,8 @@ print(len(encodeListKnown))
 print('Encoding Complete')
 
 video_file_path = 'video/Los Puentes 2021-04-23 Day/'
-myVideoList = os.listdir(video_file_path)
+# myVideoList = os.listdir(video_file_path)
+myVideoList = [f for f in os.listdir(video_file_path) if f.endswith('.mp4')]
 print(myVideoList)
 for video_file in myVideoList:
     v = video_file_path + video_file

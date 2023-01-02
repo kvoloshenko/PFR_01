@@ -48,7 +48,7 @@ def faceDetection_01(imgS):
     return facesCurFrame
 
 
-def findFacesOnVideo(video_file, output=False):
+def findFacesOnVideo(video_file, output=False, saveToFile=False):
     cap = cv2.VideoCapture(video_file)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
@@ -103,7 +103,8 @@ def findFacesOnVideo(video_file, output=False):
                 # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
                 # y1, x2, y2, x1 = y1 * 2, x2 * 2, y2 * 2, x1 * 2
                 y1, x2, y2, x1 = y1 * size_recovery_multiplier, x2 * size_recovery_multiplier, y2 * size_recovery_multiplier, x1 * size_recovery_multiplier
-                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
+                if output:
+                    cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 255), 2)
 
                 # Face Recognition:
                 encodesCurFrame = face_recognition.face_encodings(imgSRGB, facesCurFrame)
@@ -117,6 +118,10 @@ def findFacesOnVideo(video_file, output=False):
                     if matches[matchIndex]:
                         name = classNames[matchIndex]
                         print(name)
+                        # Save the frame to a file
+                        if saveToFile:
+                            imgFileName = video_file + '_' + name + '_' + str(count) + '.jpg'
+                            cv2.imwrite(imgFileName, img)
 
                         y1, x2, y2, x1 = faceLoc
                         # y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
@@ -180,8 +185,8 @@ def findFacesOnVideo(video_file, output=False):
 
 # ------------------
 
-path = 'images'
-# path = 'imagoies_kv'
+# path = 'images'
+path = 'images_kv'
 images = []
 classNames = []
 myList = os.listdir(path)
@@ -208,6 +213,7 @@ print(myVideoList)
 for video_file in myVideoList:
     v = video_file_path + video_file
     print(v)
-    findFacesOnVideo(v)
+    # findFacesOnVideo(v)
+    findFacesOnVideo(v, saveToFile=True)
     # findFacesOnVideo(v, output=True)
 

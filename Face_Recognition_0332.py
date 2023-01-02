@@ -63,16 +63,19 @@ def findFacesOnVideo(video_file):
     faces_found_first = []
     faces_names = []
     start_time = time.time()  # Время начала обработки
-    # size_reduction_factor = 0.25
+    # size_reduction_factor = 0.25 # 750 сек 12.5 мин 0 чел
     # size_recovery_multiplier = 4
 
-    size_reduction_factor = 0.5
+    size_reduction_factor = 0.5  # 2151 сек 35 мин 1 чел
     size_recovery_multiplier = 2
 
-    # size_reduction_factor = 0.33
+    # size_reduction_factor = 0.33 # 1113 сек 18.5 мин 0 чел
     # size_recovery_multiplier = 3
 
-    # size_reduction_factor = 1
+    # size_reduction_factor = 0.7 # 3827 сек 63 мин 1 час  2 чел
+    # size_recovery_multiplier = 1
+
+    # size_reduction_factor = 1 # 7593 сек 126 мин 2.1 часа 3 чел
     # size_recovery_multiplier = 1
 
     # print(f'start_time={start_time}')
@@ -178,6 +181,10 @@ images = []
 classNames = []
 myList = os.listdir(path)
 print(myList)
+
+import dlib
+# Check if dlib use CUDA?
+print('dlib.DLIB_USE_CUDA=', dlib.DLIB_USE_CUDA)
 
 for cl in myList:
     curImg = cv2.imread(f'{path}/{cl}')

@@ -28,7 +28,8 @@ FACE RECOGNITION + ATTENDANCE PROJECT | OpenCV Python | Computer Vision
 
 see the original idea at:  https://youtu.be/sz25xxF_AVE
 
-**_Note:_** Have a problem with low performance, the reason is dlib doesn't use GPU (dlib.DLIB_USE_CUDA = False).
+**_Note:_** Have a problem with low performance at windows, the reason is dlib doesn't use GPU (dlib.DLIB_USE_CUDA = False),
+but at Ubuntu dlib uses CUDA.
 
 ### Face recognition on the dance video. Example 03
 See video example here: https://youtu.be/PGwXDUTSHDU

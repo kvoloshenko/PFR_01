@@ -48,14 +48,15 @@ def faceDetection_01(imgS):
     return facesCurFrame
 
 
-def findFacesOnVideo(video_file):
+def findFacesOnVideo(video_file, output=False):
     cap = cv2.VideoCapture(video_file)
     frame_width = int(cap.get(3))
     frame_height = int(cap.get(4))
     fps = cap.get(cv2.CAP_PROP_FPS)
     print(f' frame_width={frame_width} frame_height={frame_height} fps={fps}')
     video_out_file = video_file + '_out.mp4'
-    out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
+    if output:
+        out = cv2.VideoWriter(video_out_file,cv2.VideoWriter_fourcc('m','p','4','v'), fps, (frame_width,frame_height))
 
     # Initialize count
     count = 0
@@ -124,9 +125,11 @@ def findFacesOnVideo(video_file):
                                          x2 * size_recovery_multiplier, \
                                          y2 * size_recovery_multiplier, \
                                          x1 * size_recovery_multiplier
-                        cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                        cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                        cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+                        if output:
+                            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                            cv2.rectangle(img, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                            cv2.putText(img, name, (x1 + 6, y2 - 6), cv2.FONT_HERSHEY_COMPLEX, 1, (255, 255, 255), 2)
+
                         frm_dic['name'] = name
                         frm_dic['frame_num'] = int(count)
                         frm_dic['x1'] = int(x1)
@@ -142,11 +145,12 @@ def findFacesOnVideo(video_file):
                             faces_found_first.append(frm_dic)
                             print(f'len(faces_found_first)={len(faces_found_first)}')
 
-        cv2.imshow('img RGB', img)
-        out.write(img)
-        key = cv2.waitKey(1)
-        if key == 27:
-            break
+        if output:
+            cv2.imshow('img RGB', img)
+            out.write(img)
+            key = cv2.waitKey(1)
+            if key == 27:
+                break
 
         # Прерываем цикл, когда нашли первый раз
         # if len(faces_found_first) > 0:
@@ -169,9 +173,10 @@ def findFacesOnVideo(video_file):
         print('Faces not found on the video')
 
     print("--- %s seconds ---" % run_time)  # Время окончания обработки
-    cap.release()
-    out.release()
-    cv2.destroyAllWindows()
+    if output:
+        cap.release()
+        out.release()
+        cv2.destroyAllWindows()
 
 # ------------------
 
@@ -204,4 +209,5 @@ for video_file in myVideoList:
     v = video_file_path + video_file
     print(v)
     findFacesOnVideo(v)
+    # findFacesOnVideo(v, output=True)
 

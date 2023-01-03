@@ -22,49 +22,53 @@ facetracker = load_model('facetracker.h5')
 
 # cap = cv2.VideoCapture(0)
 
-f1='kv_photos/Los Puentes 2021 part 032.mp4_Konstantin Voloshenko_4950.jpg'
+# f1='kv_photos/Los Puentes 2021 part 032.mp4_Konstantin Voloshenko_4950.jpg'
+f1='kv_photos/Los Puentes 2021 part 032.mp4_Konstantin Voloshenko_4950_450_450.jpg'
+# f1='FD_02_aug_data/test/images/a55c3e42-8071-11ed-b3b7-a8a159a2282a.3.jpg'
 img = cv2.imread(f1)
 # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
 
 # while cap.isOpened():
-while True:
-    # _, frame = cap.read()
-    frame = img
-    # frame = frame[50:500, 50:500, :]
+# while True:
+# _, frame = cap.read()
+frame = img
+# frame = frame[50:500, 50:500, :]
 
-    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    plt.imshow(rgb)
-    plt.show()
-    resized = tf.image.resize(rgb, (120, 120))
-    plt.imshow(resized)
-    plt.show()
+rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+plt.imshow(rgb)
+plt.show()
+resized = tf.image.resize(rgb, (120, 120))
+plt.imshow(resized)
+plt.show()
 
-    yhat = facetracker.predict(np.expand_dims(resized / 255, 0))
-    sample_coords = yhat[1][0]
+yhat = facetracker.predict(np.expand_dims(resized / 255, 0))
+sample_coords = yhat[1][0]
 
-    if yhat[0] > 0.5:
-        # Controls the main rectangle
-        cv2.rectangle(frame,
-                      tuple(np.multiply(sample_coords[:2], [450, 450]).astype(int)),
-                      tuple(np.multiply(sample_coords[2:], [450, 450]).astype(int)),
-                      (255, 0, 0), 2)
-        # Controls the label rectangle
-        cv2.rectangle(frame,
-                      tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
-                                   [0, -30])),
-                      tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
-                                   [80, 0])),
-                      (255, 0, 0), -1)
+if yhat[0] > 0.5:
+    # Controls the main rectangle
+    cv2.rectangle(frame,
+                  tuple(np.multiply(sample_coords[:2], [450, 450]).astype(int)),
+                  tuple(np.multiply(sample_coords[2:], [450, 450]).astype(int)),
+                  (255, 0, 0), 2)
+    # Controls the label rectangle
+    cv2.rectangle(frame,
+                  tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
+                               [0, -30])),
+                  tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
+                               [80, 0])),
+                  (255, 0, 0), -1)
 
-        # Controls the text rendered
-        cv2.putText(frame, 'face', tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
-                                                [0, -5])),
-                    cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+    # Controls the text rendered
+    cv2.putText(frame, 'face', tuple(np.add(np.multiply(sample_coords[:2], [450, 450]).astype(int),
+                                            [0, -5])),
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
-    cv2.imshow('EyeTrack', frame)
+cv2.imshow('EyeTrack', frame)
+plt.imshow(frame)
+plt.show()
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+# if cv2.waitKey(1) & 0xFF == ord('q'):
+#     break
 # cap.release()
 cv2.destroyAllWindows()

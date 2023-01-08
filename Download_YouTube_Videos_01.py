@@ -1,7 +1,21 @@
 from pytube import YouTube
+from pytube import Playlist
 
 # https://www.freecodecamp.org/news/python-program-to-download-youtube-videos/
 # https://pytube.io/en/latest/api.html
+
+def DownloadPlaylist(link, cur_dir):
+    playlist = Playlist(link)
+    print('Number of videos in playlist: %s' % len(playlist.video_urls))
+    # playlist.download_all()
+    for video in playlist.videos:
+        print('downloading : {} with url : {}'.format(video.title, video.watch_url))
+        video.streams. \
+            filter(type='video', progressive=True, file_extension='mp4'). \
+            order_by('resolution'). \
+            desc(). \
+            first(). \
+            download(cur_dir)
 
 def Download(link):
     youtubeObject = YouTube(link)
@@ -50,8 +64,14 @@ urls = ['https://youtu.be/KpsCZ_9NDXs',
 #         'https://youtu.be/GW-Y0lzHoHg',
 #         'https://youtu.be/cHwoUOfeDOw'
 #         ]
-i = 1
-for url in urls:
-    print(f'i={i}, url={url}')
-    i += 1
-    Download(url)
+
+# i = 1
+# for url in urls:
+#     print(f'i={i}, url={url}')
+#     i += 1
+#     Download(url)
+
+# Tesoros de Kazan 2021-10-08 Day
+playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qRaCGjd1QxSASS3bLe7Im7f'
+cur_dir = 'video/Tesoros de Kazan 2021-10-08 Day'
+DownloadPlaylist(playlistLink, cur_dir)

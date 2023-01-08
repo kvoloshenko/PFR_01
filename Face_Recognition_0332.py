@@ -207,7 +207,7 @@ print(len(encodeListKnown))
 print('Encoding Complete')
 
 # video_file_path = 'video/Los Puentes 2021-04-23 Day/'
-video_file_path = 'video/Tesoros de Kazan 2021-10-08 Day'
+video_file_path = 'video/Tesoros de Kazan 2021-10-08 Day/'
 # myVideoList = os.listdir(video_file_path)
 myVideoList = [f for f in os.listdir(video_file_path) if f.endswith('.mp4')]
 print(myVideoList)

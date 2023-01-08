@@ -29,20 +29,20 @@ def Download(link):
     print("Download is completed successfully")
 
 # Los Puentes 2021-04-23 Day
-urls = ['https://youtu.be/KpsCZ_9NDXs',
-        'https://youtu.be/1Od553IyLSQ',
-        'https://youtu.be/dhneV0_ueJU',
-        'https://youtu.be/UWKsGx_W5G0',
-        'https://youtu.be/WY4AfUkw-vM',
-        'https://youtu.be/IazapbOzCtI',
-        'https://youtu.be/gdjKITGhrAU',
-        'https://youtu.be/kuPalXd117M',
-        'https://youtu.be/oLneBZvD7OY',
-        'https://youtu.be/dbPI95nzewU',
-        'https://youtu.be/2x1JiY4unOk',
-        'https://youtu.be/DttJv8cWW_U',
-        'https://youtu.be/4MA0c0lm4NM',
-        'https://youtu.be/GndjKWz0FY8']
+# urls = ['https://youtu.be/KpsCZ_9NDXs',
+#         'https://youtu.be/1Od553IyLSQ',
+#         'https://youtu.be/dhneV0_ueJU',
+#         'https://youtu.be/UWKsGx_W5G0',
+#         'https://youtu.be/WY4AfUkw-vM',
+#         'https://youtu.be/IazapbOzCtI',
+#         'https://youtu.be/gdjKITGhrAU',
+#         'https://youtu.be/kuPalXd117M',
+#         'https://youtu.be/oLneBZvD7OY',
+#         'https://youtu.be/dbPI95nzewU',
+#         'https://youtu.be/2x1JiY4unOk',
+#         'https://youtu.be/DttJv8cWW_U',
+#         'https://youtu.be/4MA0c0lm4NM',
+#         'https://youtu.be/GndjKWz0FY8']
 
 # Los Puentes 2021-04-25 Evening
 # urls = ['https://youtu.be/hXFgJInu_PU',
@@ -64,6 +64,22 @@ urls = ['https://youtu.be/KpsCZ_9NDXs',
 #         'https://youtu.be/GW-Y0lzHoHg',
 #         'https://youtu.be/cHwoUOfeDOw'
 #         ]
+
+# Tesoros de Kazan 2021-10-08 Day
+urls = ['https://youtube.com/watch?v=xXEJ_3_eui0',
+'https://youtube.com/watch?v=At8_CA4wP_c',
+'https://youtube.com/watch?v=n99V1UHjguE',
+'https://youtube.com/watch?v=obmVvmYJBkU',
+'https://youtube.com/watch?v=Uenmkh__XB8',
+'https://youtube.com/watch?v=to1PTR15RxM',
+'https://youtube.com/watch?v=7JQyb8AKeQ4',
+'https://youtube.com/watch?v=zVZgFzRGG50',
+'https://youtube.com/watch?v=puhl4Od-4kg',
+'https://youtube.com/watch?v=H8YWIwh0n9I',
+'https://youtube.com/watch?v=2S4tJOK4xl0',
+'https://youtube.com/watch?v=XQxZpkOqXnE',
+'https://youtube.com/watch?v=EUpvk7VgClQ']
+
 
 # i = 1
 # for url in urls:

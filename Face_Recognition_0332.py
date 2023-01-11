@@ -207,7 +207,16 @@ print(len(encodeListKnown))
 print('Encoding Complete')
 
 # video_file_path = 'video/Los Puentes 2021-04-23 Day/'
-video_file_path = 'video/Tesoros de Kazan 2021-10-08 Day/'
+# video_file_path = 'video/Tesoros de Kazan 2021-10-08 Day/'
+# video_file_path = 'video/Tesoros de Kazan 2021-10-08 Evening/'
+# video_file_path = 'video/Tesoros de Kazan 2021-10-09 Day/'
+# video_file_path = 'video/Tesoros de Kazan 2021-10-09 Evening with Tango en Vivo/'
+# video_file_path = 'video/Tesoros de Kazan 2021-10-10 Day/'
+# video_file_path = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day/'
+# video_file_path = 'video/Vamos A Bailar Tver tango marathon 2018-10-26 Evening/'
+# video_file_path = 'video/Vamos A Bailar Tver Tango marathon 2018-10-27 Evening/'
+video_file_path = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day/'
+
 # myVideoList = os.listdir(video_file_path)
 myVideoList = [f for f in os.listdir(video_file_path) if f.endswith('.mp4')]
 print(myVideoList)

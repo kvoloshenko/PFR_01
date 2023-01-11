@@ -87,7 +87,44 @@ urls = ['https://youtube.com/watch?v=xXEJ_3_eui0',
 #     i += 1
 #     Download(url)
 
+# Los Puentes 2021-04-23 Day
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qR9E0riiuyfEIHg0Npidd-F'
+# cur_dir = 'video/Los Puentes 2021-04-23 Day'
+
 # Tesoros de Kazan 2021-10-08 Day
-playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qRaCGjd1QxSASS3bLe7Im7f'
-cur_dir = 'video/Tesoros de Kazan 2021-10-08 Day'
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qRaCGjd1QxSASS3bLe7Im7f'
+# cur_dir = 'video/Tesoros de Kazan 2021-10-08 Day'
+
+# Tesoros de Kazan 2021-10-08 Evening
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qS_DXbYk0HIWPRPVuB0eGcb'
+# cur_dir = 'video/Tesoros de Kazan 2021-10-08 Evening'
+
+# Tesoros de Kazan 2021-10-09 Day
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSAlzrsBBbCPzDmZuV_0Onz'
+# cur_dir = 'video/Tesoros de Kazan 2021-10-09 Day'
+
+# Tesoros de Kazan 2021-10-09 Evening with Tango en Vivo
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSbzuo1iknk8dmnP65MmqRJ'
+# cur_dir = 'video/Tesoros de Kazan 2021-10-09 Evening with Tango en Vivo'
+
+# Tesoros de Kazan 2021-10-10 Day
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qQBRykjWhdy3JBqGBPoO88Z'
+# cur_dir = 'video/Tesoros de Kazan 2021-10-10 Day'
+
+# Vamos A Bailar Tver tango marathon 2018-10-27 Day
+playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSl_H6QqOipYkK6C2fOgxPq'
+cur_dir = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day'
+
+# Vamos A Bailar Tver tango marathon 2018-10-26 Evening
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSlGp5-s8cwsjih4Vc0Vlh7'
+# cur_dir = 'video/Vamos A Bailar Tver tango marathon 2018-10-26 Evening'
+
+# Vamos A Bailar Tver Tango marathon 2018-10-27 Evening
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qRWdfAy_t3KLqVJW0t52wwK'
+# cur_dir = 'video/Vamos A Bailar Tver Tango marathon 2018-10-27 Evening'
+
+# Vamos A Bailar Tver Tango marathon 2018-10-28 Day
+playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qToC-KYCfG27OOXK1TNq5IW'
+cur_dir = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day'
+
 DownloadPlaylist(playlistLink, cur_dir)

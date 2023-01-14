@@ -112,8 +112,8 @@ urls = ['https://youtube.com/watch?v=xXEJ_3_eui0',
 # cur_dir = 'video/Tesoros de Kazan 2021-10-10 Day'
 
 # Vamos A Bailar Tver tango marathon 2018-10-27 Day
-playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSl_H6QqOipYkK6C2fOgxPq'
-cur_dir = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day'
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSl_H6QqOipYkK6C2fOgxPq'
+# cur_dir = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day'
 
 # Vamos A Bailar Tver tango marathon 2018-10-26 Evening
 # playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qSlGp5-s8cwsjih4Vc0Vlh7'
@@ -124,7 +124,27 @@ cur_dir = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day'
 # cur_dir = 'video/Vamos A Bailar Tver Tango marathon 2018-10-27 Evening'
 
 # Vamos A Bailar Tver Tango marathon 2018-10-28 Day
-playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qToC-KYCfG27OOXK1TNq5IW'
-cur_dir = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day'
+# playlistLink = 'https://www.youtube.com/playlist?list=PLq07ekK6H4qToC-KYCfG27OOXK1TNq5IW'
+# cur_dir = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day'
+
+# Los Puentes 2021-04-23 Day
+# playlistLink = 'https://www.youtube.com/watch?v=KpsCZ_9NDXs&list=PLq07ekK6H4qR9E0riiuyfEIHg0Npidd-F&index=1'
+# cur_dir = 'video/Los Puentes 2021-04-23 Day'
+
+# Los Puentes 2021-04-23 Evening
+# playlistLink = 'https://www.youtube.com/watch?v=ye9U569ZqEU&list=PLq07ekK6H4qT8J-fa6iys81GXsyE61qa-&index=17'
+# cur_dir = 'video/Los Puentes 2021-04-23 Evening'
+
+# Los Puentes 2021-04-24 Day
+# playlistLink = 'https://www.youtube.com/watch?v=APHpm272enM&list=PLq07ekK6H4qRtGkgCQJfyt9BeV9QxgPkt'
+# cur_dir = 'video/Los Puentes 2021-04-24 Day'
+
+# Los Puentes 2021-04-24 Evening
+# playlistLink = 'https://www.youtube.com/watch?v=oGyxecIOcMM&list=PLq07ekK6H4qSIrNtWWCH-LGSwjNbrzc5W&index=1'
+# cur_dir = 'video/Los Puentes 2021-04-24 Evening'
+
+# Los Puentes 2021-04-25 Day 5DJ
+playlistLink = 'https://www.youtube.com/watch?v=OJRN1Lmwjuw&list=PLq07ekK6H4qRuK4pPDpXfaVQlnyTptTSy'
+cur_dir = 'video/Los Puentes 2021-04-25 Day 5DJ'
 
 DownloadPlaylist(playlistLink, cur_dir)

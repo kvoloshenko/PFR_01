@@ -215,7 +215,12 @@ print('Encoding Complete')
 # video_file_path = 'video/Vamos A Bailar Tver tango marathon 2018-10-27 Day/'
 # video_file_path = 'video/Vamos A Bailar Tver tango marathon 2018-10-26 Evening/'
 # video_file_path = 'video/Vamos A Bailar Tver Tango marathon 2018-10-27 Evening/'
-video_file_path = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day/'
+# video_file_path = 'video/Vamos A Bailar Tver Tango marathon 2018-10-28 Day/'
+# video_file_path = 'video/Los Puentes 2021-04-23 Day/'
+# video_file_path = 'video/Los Puentes 2021-04-23 Evening/'
+# video_file_path = 'video/Los Puentes 2021-04-24 Day/'
+# video_file_path = 'video/Los Puentes 2021-04-24 Evening/'
+video_file_path = 'video/Los Puentes 2021-04-25 Day 5DJ/'
 
 # myVideoList = os.listdir(video_file_path)
 myVideoList = [f for f in os.listdir(video_file_path) if f.endswith('.mp4')]
